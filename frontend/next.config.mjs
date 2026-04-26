@@ -26,10 +26,17 @@ const LEGACY_REDIRECTS = [
   { from: "/our-campus.php", to: "/about/our-campus" },
   { from: "/activities.php", to: "/facilities/activities" },
   { from: "/curricular-activities.php", to: "/facilities/curricular-activities" },
-  { from: "/privacy_policy.php", to: "/policies/privacy_policy" },
-  { from: "/terms_and_condition.php", to: "/policies/terms_and_condition" },
-  { from: "/refund_policy.php", to: "/policies/refund_policy" },
-  { from: "/cancellation_policy.php", to: "/policies/cancellation_policy" }
+  { from: "/privacy_policy.php", to: "/policies/privacy-policy" },
+  { from: "/terms_and_condition.php", to: "/policies/terms-and-conditions" },
+  { from: "/refund_policy.php", to: "/policies/refund-policy" },
+  { from: "/cancellation_policy.php", to: "/policies/cancellation-policy" },
+  // Underscore → hyphen migration (Phase 2 of sitemap rework).
+  { from: "/policies/privacy_policy", to: "/policies/privacy-policy" },
+  { from: "/policies/terms_and_condition", to: "/policies/terms-and-conditions" },
+  { from: "/policies/refund_policy", to: "/policies/refund-policy" },
+  { from: "/policies/cancellation_policy", to: "/policies/cancellation-policy" },
+  // Old principal slug.
+  { from: "/about/principles-desk", to: "/about/principals-desk" }
 ];
 
 const nextConfig = {

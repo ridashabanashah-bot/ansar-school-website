@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SectionLinkGrid from "@/components/SectionLinkGrid";
 import { getAdmissionsPage, getSiteSettings } from "@/lib/content";
 import { FALLBACK_ADMISSIONS_HERO } from "@/lib/fallbackPhotos";
 import { strapiMediaUrl } from "@/lib/strapi";
@@ -134,6 +135,8 @@ export default async function AdmissionsPage() {
           </aside>
         </div>
       </section>
+
+      <SectionLinkGrid eyebrow="Helpful links" title="Admissions resources" section="admissions" />
     </>
   );
 }

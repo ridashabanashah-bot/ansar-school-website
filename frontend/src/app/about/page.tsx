@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SectionLinkGrid from "@/components/SectionLinkGrid";
 import { getAboutPage } from "@/lib/content";
 import { strapiMediaUrl } from "@/lib/strapi";
 import { FALLBACK_ABOUT_HERO, FALLBACK_PRINCIPAL_PHOTO } from "@/lib/fallbackPhotos";
@@ -92,6 +93,8 @@ export default async function AboutPage() {
           </div>
         </section>
       )}
+
+      <SectionLinkGrid eyebrow="Explore" title="More about us" section="about" />
 
       {/* Year timeline */}
       {historyParas.length > 1 ? (

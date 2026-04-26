@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ProgramCard from "@/components/ProgramCard";
+import SectionLinkGrid from "@/components/SectionLinkGrid";
 import { getAcademicsPage } from "@/lib/content";
 import { FALLBACK_ACADEMICS_HERO, FALLBACK_FACILITY_PHOTOS, FALLBACK_PROGRAM_PHOTOS } from "@/lib/fallbackPhotos";
 
@@ -84,6 +85,8 @@ export default async function AcademicsPage() {
           </div>
         </section>
       ) : null}
+
+      <SectionLinkGrid eyebrow="Dive deeper" title="Academic resources" section="academics" />
 
       {/* Inline CTA */}
       <section className="container-page section-pad">

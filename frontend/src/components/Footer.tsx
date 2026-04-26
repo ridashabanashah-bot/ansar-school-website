@@ -14,9 +14,9 @@ const FALLBACK_FOOTER_NAV: NavItem[] = [
 ];
 
 const POLICY_LINKS: NavItem[] = [
-  { label: "Privacy policy", href: "/policies/privacy_policy" },
-  { label: "Terms & conditions", href: "/policies/terms_and_condition" },
-  { label: "Refund policy", href: "/policies/refund_policy" }
+  { label: "Privacy policy", href: "/policies/privacy-policy" },
+  { label: "Terms & conditions", href: "/policies/terms-and-conditions" },
+  { label: "Refund policy", href: "/policies/refund-policy" }
 ];
 
 function cleanFlat(items: NavItem[] | undefined): NavItem[] {
