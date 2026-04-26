@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_academics_programs",
+  "info": {
+    "displayName": "Program",
+    "icon": "book",
+    "description": "Academic program / level"
+  },
+  "options": {},
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "classes": { "type": "string" },
+    "description": { "type": "text", "required": true }
+  }
+}

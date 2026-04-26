@@ -1,0 +1,23 @@
+node_modules/
+.cache/
+.tmp/
+build/
+dist/
+.strapi/
+
+# DB
+.tmp/data.db
+*.sqlite
+
+# Env
+.env
+
+# Uploads (use external storage in production)
+public/uploads/
+
+# Bootstrap secrets — never commit
+.tokens/
+
+# OS
+.DS_Store
+*.log

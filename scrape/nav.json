@@ -1,0 +1,272 @@
+{
+  "topNav": [
+    {
+      "text": "Home",
+      "href": "index.php",
+      "children": []
+    },
+    {
+      "text": "About Us",
+      "href": "#",
+      "children": [
+        {
+          "text": "Vision & Mission",
+          "href": "vision-mission.php"
+        },
+        {
+          "text": "Principl's Desk",
+          "href": "principles-desk.php"
+        },
+        {
+          "text": "School Uniform",
+          "href": "pdf-files/uniform.pdf"
+        },
+        {
+          "text": "School Days & Hours",
+          "href": "school-days-hours.php"
+        },
+        {
+          "text": "School Timing",
+          "href": "school-timing.php"
+        },
+        {
+          "text": "Working Hours",
+          "href": "working-hours.php"
+        }
+      ]
+    },
+    {
+      "text": "For CBSE",
+      "href": "#",
+      "children": [
+        {
+          "text": "Compound Wall Video",
+          "href": "#"
+        },
+        {
+          "text": "Compound Wall\n                                    Certificate",
+          "href": "pdf-files/compound-wall-certificate.pdf"
+        },
+        {
+          "text": "Land Certificate",
+          "href": "pdf-files/Land-Certificate.pdf"
+        },
+        {
+          "text": "Self Declaration",
+          "href": "pdf-files/Self declaration.pdf"
+        },
+        {
+          "text": "Academic\n                                    Calendar 2023 - 2024",
+          "href": "pdf-files/ACADEMIC-YEAR-PLAN-2023-Sheet1-1.pdf"
+        },
+        {
+          "text": "Building Safety \n                                    Certificate",
+          "href": "pdf-files/BUILDING-SAFETY-2023.pdf"
+        },
+        {
+          "text": "DEO Certificate",
+          "href": "pdf-files/DEO-CERT-1.pdf"
+        },
+        {
+          "text": "Fee Structure",
+          "href": "pdf-files/FEE_STRUCTURE_TO_WEBSITE.pdf"
+        },
+        {
+          "text": "Non-Properitary\n                                    Certificate",
+          "href": "pdf-files/Non-Properitery-Cert.pdf"
+        },
+        {
+          "text": "Affiliation Order",
+          "href": "pdf-files/AFFILIATION-ORDER.pdf"
+        },
+        {
+          "text": "Fire & Safety Certificate",
+          "href": "pdf-files/Fire&Safety.pdf"
+        },
+        {
+          "text": "NOC",
+          "href": "pdf-files/NOC.pdf"
+        },
+        {
+          "text": "PTA Association Members",
+          "href": "pdf-files/PTA.pdf"
+        },
+        {
+          "text": "Recognition Certificate",
+          "href": "pdf-files/RECOGNITION-ORDER.pdf"
+        }
+      ]
+    },
+    {
+      "text": "Academics",
+      "href": "#",
+      "children": [
+        {
+          "text": "Attendance",
+          "href": "attendance.php"
+        },
+        {
+          "text": "Examinations",
+          "href": "examination.php"
+        },
+        {
+          "text": "Teaching Staff",
+          "href": "teaching-staff.php"
+        },
+        {
+          "text": "Classwise Strength",
+          "href": "classwise-strength.php"
+        },
+        {
+          "text": "TC Sample",
+          "href": "pdf-files/sample_tc.pdf"
+        },
+        {
+          "text": "Transfer Certificate",
+          "href": "transfer_certificate.php"
+        }
+      ]
+    },
+    {
+      "text": "Admission",
+      "href": "admission.php",
+      "children": []
+    },
+    {
+      "text": "Facilities",
+      "href": "facilities.php",
+      "children": []
+    },
+    {
+      "text": "Contact",
+      "href": "contact.php",
+      "children": []
+    }
+  ],
+  "footerNav": [
+    {
+      "text": "Home",
+      "href": "index.php"
+    },
+    {
+      "text": "About Us",
+      "href": "about.php"
+    },
+    {
+      "text": "Academics",
+      "href": "academics.php"
+    },
+    {
+      "text": "Admission",
+      "href": "admission.php"
+    },
+    {
+      "text": "Facilities",
+      "href": "facilities.php"
+    },
+    {
+      "text": "Career",
+      "href": "career.php"
+    },
+    {
+      "text": "News & Events",
+      "href": "news-and-events.php"
+    },
+    {
+      "text": "Gallery",
+      "href": "gallery.php"
+    },
+    {
+      "text": "Contact Us",
+      "href": "contact.php"
+    },
+    {
+      "text": "Terms and Conditions",
+      "href": "terms_and_condition.php"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "privacy_policy.php"
+    },
+    {
+      "text": "Cancellation Policy",
+      "href": "cancellation_policy.php"
+    },
+    {
+      "text": "Refund Policy",
+      "href": "refund_policy.php"
+    },
+    {
+      "text": "Compound Wall\n                            Certificate",
+      "href": "pdf-files/compound-wall-certificate.pdf"
+    },
+    {
+      "text": "Land Certificate",
+      "href": "pdf-files/Land-Certificate.pdf"
+    },
+    {
+      "text": "Self Declaration",
+      "href": "pdf-files/Self declaration.pdf"
+    },
+    {
+      "text": "Academic\n                            Calendar 2023 - 2024",
+      "href": "pdf-files/ACADEMIC-YEAR-PLAN-2023-Sheet1-1.pdf"
+    },
+    {
+      "text": "Building Safety\n                            Certificate",
+      "href": "pdf-files/BUILDING-SAFETY-2023.pdf"
+    },
+    {
+      "text": "DEO Certificate",
+      "href": "pdf-files/DEO-CERT-1.pdf"
+    },
+    {
+      "text": "Fee Structure 2023 -\n                            2024",
+      "href": "pdf-files/SCHOOL-FEE-STRUCTURE-1.pdf"
+    },
+    {
+      "text": "Non-Properitary\n                            Certificate",
+      "href": "pdf-files/Non-Properitery-Cert.pdf"
+    },
+    {
+      "text": "Affiliation Order",
+      "href": "pdf-files/AFFILIATION-ORDER.pdf"
+    },
+    {
+      "text": "Fire & Safety Certificate",
+      "href": "pdf-files/FIRE.pdf"
+    },
+    {
+      "text": "NOC",
+      "href": "pdf-files/NOC.pdf"
+    },
+    {
+      "text": "PTA Association Members",
+      "href": "pdf-files/PTA.pdf"
+    },
+    {
+      "text": "Recognition Certificate",
+      "href": "pdf-files/RECOGNITION-ORDER.pdf"
+    },
+    {
+      "text": "info@ansarschoolpdi.in",
+      "href": "mailto:info@ansarschoolpdi.in"
+    },
+    {
+      "text": "ansarschoolpd2016@gmail.com",
+      "href": "mailto:ansarschoolpd2016@gmail.com"
+    },
+    {
+      "text": "0466 227 6251",
+      "href": "tel:04662276251"
+    },
+    {
+      "text": "+91 8113 932 555",
+      "href": "tel:+91 8113 932 555"
+    },
+    {
+      "text": "+91 7994 781 027",
+      "href": "tel:+91 7994 781 027"
+    }
+  ]
+}

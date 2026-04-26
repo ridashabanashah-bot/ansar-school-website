@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #0f172a;
+  --background: #ffffff;
+  --muted: #f7fafc;
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-content px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-brand-600 px-5 py-2.5 text-sm font-semibold text-brand-700 transition hover:bg-brand-50;
+  }
+
+  .prose-school {
+    @apply text-base leading-7 text-slate-700;
+  }
+  .prose-school p {
+    @apply mb-4 text-base leading-7 text-slate-700;
+  }
+  .prose-school h1 {
+    @apply mb-4 mt-8 font-display text-3xl font-semibold tracking-tight text-slate-900;
+  }
+  .prose-school h2 {
+    @apply mb-3 mt-8 font-display text-2xl font-semibold tracking-tight text-slate-900;
+  }
+  .prose-school h3 {
+    @apply mb-3 mt-6 font-display text-xl font-semibold text-slate-900;
+  }
+  .prose-school h4 {
+    @apply mb-2 mt-4 font-display text-lg font-semibold text-slate-900;
+  }
+  .prose-school ul {
+    @apply mb-4 list-disc space-y-1 pl-6;
+  }
+  .prose-school ol {
+    @apply mb-4 list-decimal space-y-1 pl-6;
+  }
+  .prose-school li {
+    @apply leading-7 text-slate-700;
+  }
+  .prose-school a {
+    @apply text-brand-700 underline hover:text-brand-800;
+  }
+  .prose-school strong {
+    @apply font-semibold text-slate-900;
+  }
+  .prose-school em {
+    @apply italic;
+  }
+  .prose-school blockquote {
+    @apply mb-4 border-l-4 border-brand-200 pl-4 italic text-slate-600;
+  }
+  .prose-school img {
+    @apply my-4 max-w-full rounded-lg;
+  }
+  .prose-school figure {
+    @apply my-4;
+  }
+  .prose-school figcaption {
+    @apply mt-2 text-sm text-slate-500;
+  }
+  .prose-school code {
+    @apply rounded bg-slate-100 px-1 py-0.5 text-sm text-slate-800;
+  }
+  .prose-school pre {
+    @apply mb-4 overflow-x-auto rounded-lg bg-slate-900 p-4 text-sm text-slate-100;
+  }
+  .prose-school pre code {
+    @apply bg-transparent p-0 text-slate-100;
+  }
+  .prose-school table {
+    @apply mb-4 w-full border-collapse text-left text-sm;
+  }
+  .prose-school th,
+  .prose-school td {
+    @apply border border-slate-200 px-3 py-2 align-top;
+  }
+  .prose-school th {
+    @apply bg-slate-50 font-semibold text-slate-900;
+  }
+}

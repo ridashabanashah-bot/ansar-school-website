@@ -1,0 +1,26 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Settings",
+    "description": "Global site settings: school name, contact info, social links."
+  },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "schoolName": { "type": "string", "required": true, "default": "Ansar School Padhinjarangadi" },
+    "tagline": { "type": "string" },
+    "logo": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "contactPhone": { "type": "string" },
+    "contactEmail": { "type": "email" },
+    "address": { "type": "text" },
+    "facebookUrl": { "type": "string" },
+    "instagramUrl": { "type": "string" },
+    "youtubeUrl": { "type": "string" },
+    "mapEmbedUrl": { "type": "string" },
+    "navigation": { "type": "json" },
+    "footerNavigation": { "type": "json" }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_academics_facilities",
+  "info": {
+    "displayName": "Facility",
+    "icon": "building",
+    "description": "Campus facility (lab, library, etc.)"
+  },
+  "options": {},
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "description": { "type": "text", "required": true }
+  }
+}

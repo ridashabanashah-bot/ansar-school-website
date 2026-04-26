@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Per-app ignores live in frontend/.gitignore and cms/.gitignore
+
+# Scraped assets — re-downloadable from images/manifest.json
+scrape/images/
+scrape/pdfs/
+scrape/node_modules/
+scrape/package-lock.json
+scrape/.seed-cache.json

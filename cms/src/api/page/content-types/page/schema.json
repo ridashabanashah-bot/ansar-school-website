@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": "Generic content page (about, policy, info, facilities, …) migrated from the legacy site."
+  },
+  "options": { "draftAndPublish": true },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "section": {
+      "type": "enumeration",
+      "enum": ["about", "academics", "admissions", "facilities", "policy", "info", "other"],
+      "default": "other"
+    },
+    "body": { "type": "richtext" },
+    "rawHtml": { "type": "text" },
+    "heroImage": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "attachments": { "type": "media", "multiple": true, "allowedTypes": ["files", "images"] },
+    "sourceUrl": { "type": "string" },
+    "order": { "type": "integer", "default": 0 },
+    "seo": { "type": "component", "repeatable": false, "component": "shared.seo" }
+  }
+}

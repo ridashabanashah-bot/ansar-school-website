@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "documents",
+  "info": {
+    "singularName": "document",
+    "pluralName": "documents",
+    "displayName": "Document",
+    "description": "Official documents (certificates, fee structure, calendars, sample TCs, etc.)."
+  },
+  "options": { "draftAndPublish": true },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "category": {
+      "type": "enumeration",
+      "enum": ["certificate", "policy", "fees", "calendar", "sample-tc", "other"],
+      "default": "other"
+    },
+    "file": { "type": "media", "multiple": false, "allowedTypes": ["files", "images"], "required": true },
+    "description": { "type": "text" },
+    "issuedDate": { "type": "date" },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

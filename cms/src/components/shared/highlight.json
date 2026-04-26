@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_highlights",
+  "info": {
+    "displayName": "Highlight",
+    "icon": "star",
+    "description": "Title + body card used in feature lists"
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "body": { "type": "text", "required": true },
+    "icon": { "type": "string" }
+  }
+}

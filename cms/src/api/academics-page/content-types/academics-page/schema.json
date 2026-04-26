@@ -1,0 +1,17 @@
+{
+  "kind": "singleType",
+  "collectionName": "academics_pages",
+  "info": {
+    "singularName": "academics-page",
+    "pluralName": "academics-pages",
+    "displayName": "Academics Page"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "title": { "type": "string", "required": true, "default": "Academics" },
+    "intro": { "type": "text" },
+    "programs": { "type": "component", "repeatable": true, "component": "academics.program" },
+    "facilities": { "type": "component", "repeatable": true, "component": "academics.facility" },
+    "seo": { "type": "component", "repeatable": false, "component": "shared.seo" }
+  }
+}

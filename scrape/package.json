@@ -1,0 +1,20 @@
+{
+  "name": "ansar-school-scrape",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "crawl": "node crawl.js",
+    "seed": "tsx seed.ts"
+  },
+  "devDependencies": {
+    "@mozilla/readability": "^0.5.0",
+    "@types/node": "^22.19.17",
+    "dotenv": "^16.6.1",
+    "jsdom": "^24.0.0",
+    "playwright": "^1.47.0",
+    "tsx": "^4.21.0",
+    "turndown": "^7.2.0",
+    "typescript": "^5.9.3"
+  }
+}

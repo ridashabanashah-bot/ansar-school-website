@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_admissions_steps",
+  "info": {
+    "displayName": "Step",
+    "icon": "list",
+    "description": "Numbered step in the admissions process"
+  },
+  "options": {},
+  "attributes": {
+    "step": { "type": "integer", "required": true },
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text", "required": true }
+  }
+}
