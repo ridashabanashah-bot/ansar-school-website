@@ -41,6 +41,48 @@ export interface SiteSettings {
   mapEmbedUrl?: string;
   navigation?: NavItem[];
   footerNavigation?: NavItem[];
+  footerAboutBlurb?: string;
+  officeHours?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+}
+
+export interface HeroSlide {
+  id?: number;
+  image: StrapiImage;
+  heading?: string;
+  subheading?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+export interface Stat {
+  id?: number;
+  label: string;
+  value: string;
+  icon?: string;
+}
+
+export interface Testimonial {
+  id?: number;
+  quote: string;
+  author: string;
+  role?: string;
+  photo?: StrapiImage | null;
+}
+
+export interface CtaBanner {
+  title: string;
+  body?: string;
+  buttonLabel?: string;
+  buttonHref?: string;
+  image?: StrapiImage | null;
+}
+
+export interface Highlight {
+  title: string;
+  body: string;
+  icon?: string;
 }
 
 export interface HomePage {
@@ -49,11 +91,18 @@ export interface HomePage {
   heroImage?: StrapiImage | null;
   introHeading?: string;
   introBody?: string;
-  highlights?: { title: string; body: string; icon?: string }[];
+  highlights?: Highlight[];
   ctaTitle?: string;
   ctaBody?: string;
   ctaButtonLabel?: string;
   ctaButtonHref?: string;
+  heroSlides?: HeroSlide[];
+  stats?: Stat[];
+  whyUs?: Highlight[];
+  programsHeading?: string;
+  programsBody?: string;
+  testimonials?: Testimonial[];
+  ctaBanner?: CtaBanner | null;
   seo?: SeoMeta;
 }
 

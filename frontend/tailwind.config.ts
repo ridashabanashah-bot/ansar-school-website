@@ -6,26 +6,33 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          50: "#f0f9f4",
-          100: "#dbf0e3",
-          200: "#b8e1c9",
-          300: "#8acca7",
-          400: "#56b083",
-          500: "#2f9466",
-          600: "#1f7651",
-          700: "#1a5f43",
-          800: "#174c37",
-          900: "#143f2f",
-          950: "#0a2419"
+          50: "#eff6ff",
+          100: "#dbeafe",
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#60a5fa",
+          500: "#3b82f6",
+          600: "#2563eb",
+          700: "#1d4ed8",
+          800: "#1e40af",
+          900: "#1e3a8a",
+          950: "#0e1f4d"
         },
         accent: {
-          50: "#eef6ff",
-          100: "#d9eaff",
-          400: "#5b9eff",
-          500: "#2b7fff",
-          600: "#1c63d6",
-          700: "#194fa6"
+          50: "#fff7ed",
+          100: "#ffedd5",
+          400: "#fb923c",
+          500: "#f97316",
+          600: "#ea580c",
+          700: "#c2410c"
+        },
+        warmth: {
+          50: "#fffbeb",
+          100: "#fef3c7"
         }
+      },
+      boxShadow: {
+        prominent: "0 10px 30px -10px rgba(29, 78, 216, 0.35), 0 4px 12px -4px rgba(15, 23, 42, 0.18)"
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],

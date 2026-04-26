@@ -80,90 +80,155 @@ function NavWithChildren({ item }: { item: NavItem }) {
   );
 }
 
+function SocialIcon({ href, label, children }: { href?: string; label: string; children: React.ReactNode }) {
+  if (!href) return null;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className="grid h-7 w-7 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/25"
+    >
+      {children}
+    </a>
+  );
+}
+
 export default function Header({ settings }: { settings: SiteSettings }) {
   const nav = (() => {
     const fromCms = cleanNavList(settings.navigation);
     return fromCms.length > 0 ? fromCms : FALLBACK_NAV;
   })();
+  const phoneText = settings.contactPhone?.trim();
+  const emailText = settings.contactEmail?.trim();
+  const phoneHref = phoneText ? `tel:${phoneText.replace(/\s/g, "")}` : undefined;
+  const emailHref = emailText ? `mailto:${emailText}` : undefined;
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/85 backdrop-blur">
-      <div className="container-page flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-3">
-          <span aria-hidden className="grid h-9 w-9 place-items-center rounded-full bg-brand-600 font-bold text-white">
-            A
-          </span>
-          <span className="flex flex-col leading-tight">
-            <span className="font-display text-base font-semibold text-slate-900 sm:text-lg">
-              {settings.schoolName}
-            </span>
-            {settings.tagline ? (
-              <span className="text-xs text-slate-500">{settings.tagline}</span>
+    <header className="sticky top-0 z-30 shadow-sm">
+      {/* Utility bar */}
+      <div className="hidden bg-brand-800 text-white lg:block">
+        <div className="container-page flex h-9 items-center justify-between text-xs">
+          <div className="flex items-center gap-5">
+            {phoneHref ? (
+              <a href={phoneHref} className="flex items-center gap-1.5 hover:text-brand-100">
+                <span aria-hidden>📞</span>
+                <span>{phoneText}</span>
+              </a>
             ) : null}
-          </span>
-        </Link>
-
-        <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
-          {nav.map((item) =>
-            item.children && item.children.length > 0 ? (
-              <NavWithChildren key={`${item.label}-${item.href}`} item={item} />
-            ) : (
-              <NavLeaf key={`${item.label}-${item.href}`} item={item} />
-            )
-          )}
-        </nav>
-
-        <div className="hidden lg:block">
-          <Link href="/admissions" className="btn-primary">
-            Apply now
-          </Link>
-        </div>
-
-        <details className="lg:hidden">
-          <summary
-            aria-label="Toggle menu"
-            className="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-md border border-slate-300 text-slate-700"
-          >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </summary>
-          <div className="absolute left-0 right-0 mt-2 border-t border-slate-200 bg-white px-4 pb-4 pt-2 shadow-lg">
-            <ul className="flex flex-col">
-              {nav.map((item) => (
-                <li key={`${item.label}-${item.href}-mob`}>
-                  {item.children && item.children.length > 0 ? (
-                    <details>
-                      <summary className="cursor-pointer rounded-md px-3 py-2 text-base font-medium text-slate-800 hover:bg-brand-50">
-                        {item.label}
-                      </summary>
-                      <ul className="ml-3 border-l border-slate-200 pl-3">
-                        {item.children.map((c) => (
-                          <li key={`${c.label}-${c.href}-mob-c`}>
-                            <NavLeaf
-                              item={c}
-                              className="block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700"
-                            />
-                          </li>
-                        ))}
-                      </ul>
-                    </details>
-                  ) : (
-                    <NavLeaf
-                      item={item}
-                      className="block rounded-md px-3 py-2 text-base text-slate-700 hover:bg-brand-50 hover:text-brand-700"
-                    />
-                  )}
-                </li>
-              ))}
-              <li className="mt-2">
-                <Link href="/admissions" className="btn-primary w-full">
-                  Apply now
-                </Link>
-              </li>
-            </ul>
+            {emailHref ? (
+              <a href={emailHref} className="flex items-center gap-1.5 hover:text-brand-100">
+                <span aria-hidden>✉</span>
+                <span>{emailText}</span>
+              </a>
+            ) : null}
           </div>
-        </details>
+          <div className="flex items-center gap-3">
+            <SocialIcon href={settings.facebookUrl} label="Facebook">
+              <span aria-hidden className="text-[10px] font-bold">f</span>
+            </SocialIcon>
+            <SocialIcon href={settings.instagramUrl} label="Instagram">
+              <span aria-hidden className="text-[10px] font-bold">IG</span>
+            </SocialIcon>
+            <SocialIcon href={settings.youtubeUrl} label="YouTube">
+              <span aria-hidden className="text-[10px] font-bold">▶</span>
+            </SocialIcon>
+            <Link
+              href="/admissions"
+              className="ml-2 inline-flex items-center rounded-full bg-accent-500 px-3 py-1 text-xs font-semibold text-white shadow-sm ring-1 ring-accent-600/20 transition hover:bg-accent-600"
+            >
+              Apply now →
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Main bar */}
+      <div className="border-b border-slate-200 bg-white/95 backdrop-blur">
+        <div className="container-page flex h-16 items-center justify-between gap-4 lg:h-20">
+          <Link href="/" className="flex items-center gap-3">
+            <span aria-hidden className="grid h-10 w-10 place-items-center rounded-full bg-brand-700 font-bold text-white shadow-prominent">
+              A
+            </span>
+            <span className="flex flex-col leading-tight">
+              <span className="font-display text-base font-semibold text-slate-900 sm:text-lg">
+                {settings.schoolName}
+              </span>
+              {settings.tagline ? (
+                <span className="text-xs text-slate-500">{settings.tagline}</span>
+              ) : null}
+            </span>
+          </Link>
+
+          <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+            {nav.map((item) =>
+              item.children && item.children.length > 0 ? (
+                <NavWithChildren key={`${item.label}-${item.href}`} item={item} />
+              ) : (
+                <NavLeaf key={`${item.label}-${item.href}`} item={item} />
+              )
+            )}
+          </nav>
+
+          <div className="hidden lg:block">
+            <Link
+              href="/admissions"
+              className="inline-flex items-center justify-center rounded-full bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white shadow-prominent ring-1 ring-accent-600/20 transition hover:bg-accent-600"
+            >
+              Apply now
+            </Link>
+          </div>
+
+          <details className="relative lg:hidden">
+            <summary
+              aria-label="Toggle menu"
+              className="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-md border border-slate-300 text-slate-700"
+            >
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </summary>
+            <div className="absolute right-0 top-full z-40 mt-2 w-72 rounded-xl border border-slate-200 bg-white p-3 shadow-xl">
+              <ul className="flex flex-col">
+                {nav.map((item) => (
+                  <li key={`${item.label}-${item.href}-mob`}>
+                    {item.children && item.children.length > 0 ? (
+                      <details>
+                        <summary className="cursor-pointer rounded-md px-3 py-2 text-base font-medium text-slate-800 hover:bg-brand-50">
+                          {item.label}
+                        </summary>
+                        <ul className="ml-3 border-l border-slate-200 pl-3">
+                          {item.children.map((c) => (
+                            <li key={`${c.label}-${c.href}-mob-c`}>
+                              <NavLeaf
+                                item={c}
+                                className="block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700"
+                              />
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    ) : (
+                      <NavLeaf
+                        item={item}
+                        className="block rounded-md px-3 py-2 text-base text-slate-700 hover:bg-brand-50 hover:text-brand-700"
+                      />
+                    )}
+                  </li>
+                ))}
+                <li className="mt-2">
+                  <Link
+                    href="/admissions"
+                    className="inline-flex w-full items-center justify-center rounded-full bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm ring-1 ring-accent-600/20"
+                  >
+                    Apply now
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </details>
+        </div>
       </div>
     </header>
   );

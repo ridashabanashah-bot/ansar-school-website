@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_cta_banners",
+  "info": {
+    "displayName": "CTA Banner",
+    "icon": "bullhorn",
+    "description": "Full-width call-to-action banner with optional side image."
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "body": { "type": "text" },
+    "buttonLabel": { "type": "string" },
+    "buttonHref": { "type": "string" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
+  }
+}

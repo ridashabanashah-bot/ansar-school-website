@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_home_testimonials",
+  "info": {
+    "displayName": "Testimonial",
+    "icon": "quoteLeft",
+    "description": "A single testimonial (quote, author, role, photo)."
+  },
+  "options": {},
+  "attributes": {
+    "quote": { "type": "text", "required": true },
+    "author": { "type": "string", "required": true },
+    "role": { "type": "string" },
+    "photo": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
+  }
+}

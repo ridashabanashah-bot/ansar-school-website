@@ -20,6 +20,13 @@
     "ctaBody": { "type": "text" },
     "ctaButtonLabel": { "type": "string" },
     "ctaButtonHref": { "type": "string" },
+    "heroSlides": { "type": "component", "repeatable": true, "component": "home.hero-slide" },
+    "stats": { "type": "component", "repeatable": true, "max": 6, "component": "home.stat" },
+    "whyUs": { "type": "component", "repeatable": true, "max": 6, "component": "shared.highlight" },
+    "programsHeading": { "type": "string" },
+    "programsBody": { "type": "text" },
+    "testimonials": { "type": "component", "repeatable": true, "component": "home.testimonial" },
+    "ctaBanner": { "type": "component", "repeatable": false, "component": "shared.cta-banner" },
     "seo": { "type": "component", "repeatable": false, "component": "shared.seo" }
   }
 }

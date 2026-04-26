@@ -21,6 +21,10 @@
     "youtubeUrl": { "type": "string" },
     "mapEmbedUrl": { "type": "string" },
     "navigation": { "type": "json" },
-    "footerNavigation": { "type": "json" }
+    "footerNavigation": { "type": "json" },
+    "footerAboutBlurb": { "type": "text" },
+    "officeHours": { "type": "string" },
+    "addressLine1": { "type": "string" },
+    "addressLine2": { "type": "string" }
   }
 }

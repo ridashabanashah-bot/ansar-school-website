@@ -30,7 +30,12 @@ export const fallbackSiteSettings: SiteSettings = {
   youtubeUrl: "",
   mapEmbedUrl: "",
   navigation: [],
-  footerNavigation: []
+  footerNavigation: [],
+  footerAboutBlurb:
+    "Ansar School Padhinjarangadi is committed to a balanced, values-led education that prepares every child for a confident future. Our campus, faculty, and traditions are rooted in the spirit of service that has guided us since 1986.",
+  officeHours: "Monday – Saturday · 8:30 AM – 3:30 PM",
+  addressLine1: "Ansar School Padhinjarangadi",
+  addressLine2: "Padinjarangadi P.O., Palakkad Dt., Kerala – 679552"
 };
 
 export const fallbackNavigation: NavItem[] = [];
@@ -59,7 +64,48 @@ export const fallbackHome: HomePage = {
   ctaTitle: "Admissions are open",
   ctaBody: "Visit the campus, meet our team, and learn how to enroll your child for the new academic year.",
   ctaButtonLabel: "Start admission",
-  ctaButtonHref: "/admissions"
+  ctaButtonHref: "/admissions",
+  heroSlides: [],
+  stats: [
+    { label: "Years of trust", value: "38+" },
+    { label: "Students", value: "1,200+" },
+    { label: "Faculty members", value: "60+" },
+    { label: "Acres of campus", value: "5.0" }
+  ],
+  whyUs: [
+    { title: "Strong board results", body: "Consistent track record across CBSE board exams." },
+    { title: "Caring faculty", body: "Teachers who know every student by name." },
+    { title: "Modern facilities", body: "Smart classrooms, labs, library, and a full play ground." },
+    { title: "Values first", body: "Character, discipline, and service woven into every day." },
+    { title: "Sports & arts", body: "Daily PE, music, and arts as part of the rhythm of school." },
+    { title: "Safe campus", body: "CCTV, trained staff, and a secure pickup-and-drop process." }
+  ],
+  programsHeading: "Our programs",
+  programsBody:
+    "From early years through high school, our curriculum is sequenced to build strong foundations and lifelong learners.",
+  testimonials: [
+    {
+      quote: "Ansar gave my daughter both the academic edge and the values we wanted for her. The teachers are like family.",
+      author: "Sajitha P.",
+      role: "Parent, Class 7"
+    },
+    {
+      quote: "Coming back to teach at the school I once studied in is the proudest part of my career.",
+      author: "Mr. Rashid",
+      role: "Senior teacher, Mathematics"
+    },
+    {
+      quote: "The labs and library here are honestly better than what I expected for a small-town school.",
+      author: "Aisha N.",
+      role: "Class 10 student"
+    }
+  ],
+  ctaBanner: {
+    title: "Help your child reach new heights",
+    body: "Begin the admission journey today — our team will walk you through eligibility, fees, and the next academic intake.",
+    buttonLabel: "Start admission",
+    buttonHref: "/admissions"
+  }
 };
 
 export const fallbackAbout: AboutPage = {
