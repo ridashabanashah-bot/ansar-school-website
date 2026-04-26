@@ -5,41 +5,49 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Logo-derived deep navy ink ramp (single-tone Ansar logo).
         brand: {
-          50: "#eff6ff",
-          100: "#dbeafe",
-          200: "#bfdbfe",
-          300: "#93c5fd",
-          400: "#60a5fa",
-          500: "#3b82f6",
-          600: "#2563eb",
-          700: "#1d4ed8",
-          800: "#1e40af",
-          900: "#1e3a8a",
-          950: "#0e1f4d"
+          50: "#f4f6f9",
+          100: "#e6ecf2",
+          200: "#c7d3e0",
+          300: "#95acc4",
+          400: "#5d7a99",
+          500: "#335778",
+          600: "#234260",
+          700: "#173550",
+          800: "#102a40",
+          900: "#0c2033",
+          950: "#061523"
         },
+        // Warm gold accent — single-color logo, so accent stays neutral-warm.
         accent: {
-          50: "#fff7ed",
-          100: "#ffedd5",
-          400: "#fb923c",
-          500: "#f97316",
-          600: "#ea580c",
-          700: "#c2410c"
+          50: "#fdf8eb",
+          100: "#faecc4",
+          200: "#f3d685",
+          300: "#ecbd4b",
+          400: "#d8a23a",
+          500: "#b8801c",
+          600: "#976514",
+          700: "#75500f",
+          800: "#5a3d0c",
+          900: "#3f2a08"
         },
-        warmth: {
-          50: "#fffbeb",
-          100: "#fef3c7"
+        // Cream / off-white surfaces — alabaster-style warm neutrals.
+        cream: {
+          50: "#fdf9f1",
+          100: "#f7efe1",
+          200: "#ecdfc6"
         }
       },
-      boxShadow: {
-        prominent: "0 10px 30px -10px rgba(29, 78, 216, 0.35), 0 4px 12px -4px rgba(15, 23, 42, 0.18)"
-      },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Poppins", "Inter", "system-ui", "sans-serif"]
+        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        display: ["var(--font-fraunces)", "Fraunces", "Georgia", "serif"]
       },
       maxWidth: {
         content: "72rem"
+      },
+      boxShadow: {
+        prominent: "0 10px 30px -10px rgba(15, 32, 51, 0.20), 0 4px 12px -4px rgba(15, 32, 51, 0.10)"
       }
     }
   },

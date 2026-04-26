@@ -11,27 +11,25 @@ export default async function PoliciesIndexPage() {
 
   return (
     <>
-      <PageHeader
-        eyebrow="School policies"
-        title="Policies"
-        intro="Privacy, terms, refund, and cancellation policies."
-      />
+      <PageHeader eyebrow="School policies" title="Policies" intro="Privacy, terms, refund, and cancellation policies." />
 
-      <section className="container-page py-12 lg:py-16">
+      <section className="container-page section-pad">
         {pages.length === 0 ? (
-          <div className="rounded-xl bg-slate-50 p-6 text-sm text-slate-600">
+          <div className="rounded-xl border border-dashed border-cream-200 bg-cream-50 p-12 text-center text-sm text-slate-600">
             Policy pages will appear here once they are published in the CMS.
           </div>
         ) : (
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mx-auto grid max-w-3xl gap-px overflow-hidden rounded-xl border border-cream-200 bg-cream-200">
             {pages.map((p) => (
               <li key={p.id}>
                 <Link
                   href={pagePath(p.section, p.slug)}
-                  className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-brand-300 hover:shadow-sm"
+                  className="flex items-center justify-between gap-4 bg-white px-6 py-5 transition hover:bg-cream-50"
                 >
-                  <div className="font-display text-lg font-semibold text-slate-900">{p.title}</div>
-                  <div className="mt-3 text-sm font-semibold text-brand-700">Read →</div>
+                  <div>
+                    <div className="font-display text-xl font-medium tracking-tight text-slate-900">{p.title}</div>
+                  </div>
+                  <span aria-hidden className="text-brand-700">→</span>
                 </Link>
               </li>
             ))}

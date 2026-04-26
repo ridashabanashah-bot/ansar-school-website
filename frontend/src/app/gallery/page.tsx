@@ -12,31 +12,41 @@ export default async function GalleryPage() {
     <>
       <PageHeader eyebrow="Photo gallery" title="Life at our school" intro="Snapshots from classes, events, and celebrations." />
 
-      <section className="container-page py-12">
+      <section className="container-page section-pad">
         {items.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
-            <h2 className="font-display text-xl font-semibold text-slate-900">Gallery coming soon</h2>
+          <div className="rounded-xl border border-dashed border-cream-200 bg-cream-50 p-12 text-center">
+            <h2 className="font-display text-2xl font-medium tracking-tight text-slate-900">Gallery coming soon</h2>
             <p className="mt-2 text-sm text-slate-600">
               Photos will appear here once they are uploaded through the CMS.
             </p>
           </div>
         ) : (
-          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          // Tasteful masonry via CSS columns; break-inside avoid keeps each
+          // image whole, varying heights make the grid feel curated.
+          <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
             {items.map((item) => {
               const src = strapiMediaUrl(item.image?.url) ?? "";
               return (
-                <li key={item.id} className="overflow-hidden rounded-xl bg-slate-100 ring-1 ring-slate-200">
+                <figure
+                  key={item.id}
+                  className="mb-4 break-inside-avoid overflow-hidden rounded-xl ring-1 ring-cream-200"
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={src}
                     alt={item.image?.alternativeText ?? item.title ?? "Gallery image"}
-                    className="aspect-square h-full w-full object-cover transition hover:scale-105"
+                    className="w-full"
                     loading="lazy"
                   />
-                </li>
+                  {item.caption ? (
+                    <figcaption className="bg-white px-4 py-3 text-xs text-slate-500">
+                      {item.caption}
+                    </figcaption>
+                  ) : null}
+                </figure>
               );
             })}
-          </ul>
+          </div>
         )}
       </section>
     </>

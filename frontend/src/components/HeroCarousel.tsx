@@ -11,24 +11,32 @@ interface Props {
   fallbackSubtitle?: string;
   fallbackCtaLabel?: string;
   fallbackCtaHref?: string;
+  /** Optional decorative photos used when CMS has no slides yet. */
+  fallbackImageUrls?: string[];
 }
 
-const AUTO_ADVANCE_MS = 6000;
+const AUTO_ADVANCE_MS = 8000;
 
-export default function HeroCarousel({ slides, fallbackTitle, fallbackSubtitle, fallbackCtaLabel, fallbackCtaHref }: Props) {
+export default function HeroCarousel({
+  slides,
+  fallbackTitle,
+  fallbackSubtitle,
+  fallbackCtaLabel,
+  fallbackCtaHref,
+  fallbackImageUrls = []
+}: Props) {
   const effective: HeroSlide[] = slides.length > 0
     ? slides
-    : [{
-        image: { url: "" },
+    : (fallbackImageUrls.length > 0 ? fallbackImageUrls : [""]).map((u) => ({
+        image: { url: u },
         heading: fallbackTitle,
         subheading: fallbackSubtitle,
-        ctaLabel: fallbackCtaLabel ?? "Start admission",
+        ctaLabel: fallbackCtaLabel ?? "Apply for admission",
         ctaHref: fallbackCtaHref ?? "/admissions"
-      }];
+      }));
 
   const [active, setActive] = useState(0);
   const total = effective.length;
-
   const next = useCallback(() => setActive((i) => (i + 1) % total), [total]);
   const prev = useCallback(() => setActive((i) => (i - 1 + total) % total), [total]);
 
@@ -39,15 +47,17 @@ export default function HeroCarousel({ slides, fallbackTitle, fallbackSubtitle, 
   }, [next, total]);
 
   return (
-    <section className="relative isolate min-h-[520px] overflow-hidden bg-brand-900 text-white sm:min-h-[600px] lg:min-h-[640px]">
+    <section
+      className="group/hero relative isolate min-h-[70vh] overflow-hidden bg-brand-950 text-white sm:min-h-[78vh] lg:min-h-[80vh]"
+    >
       {effective.map((slide, idx) => {
-        const url = strapiMediaUrl(slide.image?.url);
+        const url = strapiMediaUrl(slide.image?.url) ?? slide.image?.url ?? null;
         const isActive = idx === active;
         return (
           <div
             key={`slide-${idx}`}
             aria-hidden={!isActive}
-            className={`absolute inset-0 transition-opacity duration-700 ${isActive ? "opacity-100" : "pointer-events-none opacity-0"}`}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isActive ? "opacity-100" : "pointer-events-none opacity-0"}`}
           >
             {url ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -58,45 +68,40 @@ export default function HeroCarousel({ slides, fallbackTitle, fallbackSubtitle, 
                 aria-hidden
               />
             )}
-            <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-950/85 via-brand-900/55 to-brand-900/10" />
+            {/* Bottom-up dark gradient for text legibility */}
+            <div className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-950/85 via-brand-900/45 to-brand-900/10" />
           </div>
         );
       })}
 
-      <div className="container-page relative flex min-h-[520px] flex-col justify-end py-14 sm:min-h-[600px] sm:py-20 lg:min-h-[640px]">
-        <div className="max-w-2xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand-100 ring-1 ring-white/20 backdrop-blur">
-            Empowering students since 1986
+      <div className="container-page relative flex min-h-[70vh] flex-col justify-end pb-20 pt-32 sm:min-h-[78vh] lg:min-h-[80vh] lg:pb-28">
+        <div className="max-w-3xl">
+          <div className="eyebrow text-cream-100">
+            Established 1986 · Padhinjarangadi, Kerala
           </div>
-          <h1 className="font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="mt-3 font-display text-5xl font-medium leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
             {effective[active]?.heading ?? fallbackTitle}
           </h1>
           {effective[active]?.subheading || fallbackSubtitle ? (
-            <p className="mt-4 max-w-xl text-base leading-7 text-slate-200 sm:text-lg">
+            <p className="mt-5 max-w-xl text-base leading-7 text-slate-100 sm:text-lg">
               {effective[active]?.subheading ?? fallbackSubtitle}
             </p>
           ) : null}
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             {effective[active]?.ctaLabel && effective[active]?.ctaHref ? (
               <Link
                 href={effective[active].ctaHref ?? "/admissions"}
-                className="inline-flex items-center justify-center rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white shadow-prominent ring-1 ring-accent-600/30 transition hover:bg-accent-600"
+                className="inline-flex items-center justify-center rounded-md bg-white px-7 py-3 text-sm font-semibold text-brand-900 transition-all hover:-translate-y-0.5 hover:bg-cream-50"
               >
                 {effective[active].ctaLabel}
               </Link>
             ) : null}
-            <Link
-              href="/about"
-              className="inline-flex items-center justify-center rounded-full border border-white/40 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/15"
-            >
-              Discover our school
-            </Link>
           </div>
         </div>
 
-        {/* Controls */}
+        {/* Controls — visible on hover only on lg+ */}
         {total > 1 ? (
-          <div className="mt-10 flex items-center gap-4">
+          <div className="mt-12 flex items-center justify-between">
             <div className="flex items-center gap-2">
               {effective.map((_, idx) => (
                 <button
@@ -104,16 +109,16 @@ export default function HeroCarousel({ slides, fallbackTitle, fallbackSubtitle, 
                   type="button"
                   aria-label={`Go to slide ${idx + 1}`}
                   onClick={() => setActive(idx)}
-                  className={`h-1.5 rounded-full transition-all ${idx === active ? "w-10 bg-white" : "w-4 bg-white/40 hover:bg-white/70"}`}
+                  className={`h-1 rounded-full transition-all ${idx === active ? "w-12 bg-white" : "w-4 bg-white/40 hover:bg-white/70"}`}
                 />
               ))}
             </div>
-            <div className="ml-auto flex items-center gap-2">
+            <div className="hidden items-center gap-2 opacity-0 transition group-hover/hero:opacity-100 lg:flex">
               <button
                 type="button"
                 aria-label="Previous slide"
                 onClick={prev}
-                className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/30 backdrop-blur transition hover:bg-white/20"
+                className="grid h-10 w-10 place-items-center rounded-full border border-white/40 bg-white/5 text-white backdrop-blur transition hover:bg-white/15"
               >
                 ←
               </button>
@@ -121,7 +126,7 @@ export default function HeroCarousel({ slides, fallbackTitle, fallbackSubtitle, 
                 type="button"
                 aria-label="Next slide"
                 onClick={next}
-                className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/30 backdrop-blur transition hover:bg-white/20"
+                className="grid h-10 w-10 place-items-center rounded-full border border-white/40 bg-white/5 text-white backdrop-blur transition hover:bg-white/15"
               >
                 →
               </button>

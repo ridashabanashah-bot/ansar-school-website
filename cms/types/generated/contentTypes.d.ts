@@ -593,11 +593,13 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    ctaBanner: Schema.Attribute.Component<'shared.cta-banner', false>;
     ctaBody: Schema.Attribute.Text;
     ctaButtonHref: Schema.Attribute.String;
     ctaButtonLabel: Schema.Attribute.String;
     ctaTitle: Schema.Attribute.String;
     heroImage: Schema.Attribute.Media<'images'>;
+    heroSlides: Schema.Attribute.Component<'home.hero-slide', true>;
     heroSubtitle: Schema.Attribute.Text;
     heroTitle: Schema.Attribute.String & Schema.Attribute.Required;
     highlights: Schema.Attribute.Component<'shared.highlight', true>;
@@ -609,11 +611,28 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
       'api::home-page.home-page'
     > &
       Schema.Attribute.Private;
+    programsBody: Schema.Attribute.Text;
+    programsHeading: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
+    stats: Schema.Attribute.Component<'home.stat', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 6;
+        },
+        number
+      >;
+    testimonials: Schema.Attribute.Component<'home.testimonial', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    whyUs: Schema.Attribute.Component<'shared.highlight', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 6;
+        },
+        number
+      >;
   };
 }
 

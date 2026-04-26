@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground: #0f172a;
-  --background: #ffffff;
-  --muted: #f7fafc;
+  --foreground: #1f2937;
+  --background: #fdf9f1;
+  --muted: #f7efe1;
 }
 
 html,
@@ -25,79 +25,86 @@ a {
     @apply mx-auto w-full max-w-content px-4 sm:px-6 lg:px-8;
   }
 
+  /* Primary CTA — solid brand-700, simple rounded-md, gentle hover lift. */
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600;
+    @apply inline-flex items-center justify-center rounded-md bg-brand-700 px-6 py-3 text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-0.5 hover:bg-brand-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-full border border-brand-600 px-5 py-2.5 text-sm font-semibold text-brand-700 transition hover:bg-brand-50;
+    @apply inline-flex items-center justify-center rounded-md border border-brand-700 px-6 py-3 text-sm font-semibold text-brand-700 transition-all duration-150 hover:-translate-y-0.5 hover:bg-brand-50;
   }
 
+  /* Tiny tracked-out uppercase eyebrow tag above section headings. */
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-700;
+  }
+
+  .section-pad {
+    @apply py-20 lg:py-28;
+  }
+
+  /* Prose styling for CMS body markdown — calm, readable. */
   .prose-school {
     @apply text-base leading-7 text-slate-700;
   }
   .prose-school p {
-    @apply mb-4 text-base leading-7 text-slate-700;
+    @apply mb-5 text-base leading-7 text-slate-700;
   }
-  .prose-school h1 {
-    @apply mb-4 mt-8 font-display text-3xl font-semibold tracking-tight text-slate-900;
+  .prose-school h1,
+  .prose-school h2,
+  .prose-school h3,
+  .prose-school h4 {
+    @apply font-display tracking-tight text-slate-900;
   }
   .prose-school h2 {
-    @apply mb-3 mt-8 font-display text-2xl font-semibold tracking-tight text-slate-900;
+    @apply mt-10 mb-4 text-3xl font-medium;
   }
   .prose-school h3 {
-    @apply mb-3 mt-6 font-display text-xl font-semibold text-slate-900;
+    @apply mt-8 mb-3 text-2xl font-medium;
   }
   .prose-school h4 {
-    @apply mb-2 mt-4 font-display text-lg font-semibold text-slate-900;
+    @apply mt-6 mb-2 text-xl font-medium;
   }
   .prose-school ul {
-    @apply mb-4 list-disc space-y-1 pl-6;
+    @apply mb-5 list-disc space-y-1 pl-6;
   }
   .prose-school ol {
-    @apply mb-4 list-decimal space-y-1 pl-6;
+    @apply mb-5 list-decimal space-y-1 pl-6;
   }
   .prose-school li {
     @apply leading-7 text-slate-700;
   }
   .prose-school a {
-    @apply text-brand-700 underline hover:text-brand-800;
+    @apply text-brand-700 underline decoration-brand-200 underline-offset-4 hover:decoration-brand-700;
   }
   .prose-school strong {
     @apply font-semibold text-slate-900;
   }
-  .prose-school em {
-    @apply italic;
-  }
   .prose-school blockquote {
-    @apply mb-4 border-l-4 border-brand-200 pl-4 italic text-slate-600;
+    @apply mb-5 border-l-2 border-brand-300 pl-5 font-display text-lg italic text-slate-700;
   }
   .prose-school img {
-    @apply my-4 max-w-full rounded-lg;
-  }
-  .prose-school figure {
-    @apply my-4;
-  }
-  .prose-school figcaption {
-    @apply mt-2 text-sm text-slate-500;
+    @apply my-6 max-w-full rounded-lg;
   }
   .prose-school code {
-    @apply rounded bg-slate-100 px-1 py-0.5 text-sm text-slate-800;
-  }
-  .prose-school pre {
-    @apply mb-4 overflow-x-auto rounded-lg bg-slate-900 p-4 text-sm text-slate-100;
-  }
-  .prose-school pre code {
-    @apply bg-transparent p-0 text-slate-100;
+    @apply rounded bg-cream-100 px-1.5 py-0.5 text-sm text-slate-800;
   }
   .prose-school table {
-    @apply mb-4 w-full border-collapse text-left text-sm;
+    @apply mb-5 w-full border-collapse text-left text-sm;
   }
   .prose-school th,
   .prose-school td {
-    @apply border border-slate-200 px-3 py-2 align-top;
+    @apply border border-cream-200 px-3 py-2 align-top;
   }
   .prose-school th {
-    @apply bg-slate-50 font-semibold text-slate-900;
+    @apply bg-cream-50 font-semibold text-slate-900;
+  }
+
+  /* Restrained card surface used across the redesign. */
+  .card {
+    @apply overflow-hidden rounded-xl border border-cream-200 bg-white ring-1 ring-black/[0.04] transition-all duration-200;
+  }
+  .card:hover {
+    @apply -translate-y-0.5 ring-black/[0.07];
   }
 }

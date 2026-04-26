@@ -22,3 +22,7 @@ scrape/pdfs/
 scrape/node_modules/
 scrape/package-lock.json
 scrape/.seed-cache.json
+scrape/.media-cache.json
+
+# Logo source (already copied into assets/logo.png + frontend/public/logo.png)
+/Ansar logo.png
