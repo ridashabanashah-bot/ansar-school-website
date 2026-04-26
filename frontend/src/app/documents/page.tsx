@@ -77,43 +77,45 @@ export default async function DocumentsIndexPage() {
                       const fileUrl = strapiMediaUrl(d.file?.url);
                       const size = formatBytes(d.file?.size);
                       return (
-                        <li key={d.id}>
-                          <Link
-                            href={`/documents/${d.slug}`}
-                            className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-brand-300 hover:shadow-sm"
-                          >
-                            <div className="flex items-start gap-3">
-                              <span
-                                aria-hidden
-                                className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-700"
-                              >
-                                PDF
-                              </span>
-                              <div className="flex-1">
-                                <div className="font-semibold text-slate-900">{d.title}</div>
-                                {size ? (
-                                  <div className="mt-0.5 text-xs text-slate-500">{size}</div>
-                                ) : null}
-                              </div>
-                            </div>
-                            {d.description ? (
-                              <p className="mt-3 text-sm text-slate-600">{d.description}</p>
-                            ) : null}
-                            <div className="mt-4 flex items-center justify-between text-sm">
-                              <span className="font-semibold text-brand-700">View →</span>
-                              {fileUrl ? (
-                                <a
-                                  href={fileUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-slate-600 hover:text-brand-700"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  Download
-                                </a>
+                        <li
+                          key={d.id}
+                          className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-brand-300 hover:shadow-sm"
+                        >
+                          <div className="flex items-start gap-3">
+                            <span
+                              aria-hidden
+                              className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-700"
+                            >
+                              PDF
+                            </span>
+                            <div className="flex-1">
+                              <div className="font-semibold text-slate-900">{d.title}</div>
+                              {size ? (
+                                <div className="mt-0.5 text-xs text-slate-500">{size}</div>
                               ) : null}
                             </div>
-                          </Link>
+                          </div>
+                          {d.description ? (
+                            <p className="mt-3 text-sm text-slate-600">{d.description}</p>
+                          ) : null}
+                          <div className="mt-4 flex items-center justify-between text-sm">
+                            <Link
+                              href={`/documents/${d.slug}`}
+                              className="font-semibold text-brand-700 hover:underline"
+                            >
+                              View →
+                            </Link>
+                            {fileUrl ? (
+                              <a
+                                href={fileUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-slate-600 hover:text-brand-700"
+                              >
+                                Download
+                              </a>
+                            ) : null}
+                          </div>
                         </li>
                       );
                     })}

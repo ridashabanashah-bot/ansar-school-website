@@ -231,6 +231,56 @@ function shouldRun(stage: Stage, flags: Flags): boolean {
   return flags.only === null || flags.only.has(stage);
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+// Retry policy: hosted Strapi instances (esp. free tier) intermittently
+// return 5xx HTML pages from the edge during cold-start or rate-limit
+// pressure. Retry these with exponential backoff so transient blips don't
+// fail the whole seed. Throttle every request to avoid overwhelming the
+// hosted instance.
+const RETRY_MAX = 8;
+const REQ_THROTTLE_MS = Number.parseInt(process.env.SEED_THROTTLE_MS ?? '1500', 10);
+const RETRY_BASE_MS = 4000;
+let lastRequestAt = 0;
+
+async function throttle(): Promise<void> {
+  const wait = REQ_THROTTLE_MS - (Date.now() - lastRequestAt);
+  if (wait > 0) await sleep(wait);
+  lastRequestAt = Date.now();
+}
+
+async function withRetry<T>(label: string, fn: () => Promise<{ ok: boolean; status: number; data?: T; bodyPreview: string }>): Promise<T> {
+  let attempt = 0;
+  let lastStatus = 0;
+  let lastBody = '';
+  while (attempt <= RETRY_MAX) {
+    await throttle();
+    try {
+      const res = await fn();
+      if (res.ok && res.data !== undefined) return res.data;
+      lastStatus = res.status;
+      lastBody = res.bodyPreview;
+      const isRetryable = res.status === 0 || (res.status >= 500 && res.status <= 599) || res.status === 429;
+      if (!isRetryable) {
+        failures.push({ url: label, status: res.status, body: lastBody });
+        throw new Error(`HTTP ${res.status} ${label} :: ${lastBody}`);
+      }
+    } catch (e) {
+      const msg = (e as Error).message;
+      if (lastStatus === 0) lastBody = msg;
+    }
+    if (attempt === RETRY_MAX) break;
+    const delay = Math.min(120_000, RETRY_BASE_MS * Math.pow(2, attempt)) + Math.floor(Math.random() * 1000);
+    console.warn(`  ! ${label} → HTTP ${lastStatus}, retrying in ${Math.round(delay / 1000)}s (attempt ${attempt + 1}/${RETRY_MAX})`);
+    await sleep(delay);
+    attempt++;
+  }
+  failures.push({ url: label, status: lastStatus, body: lastBody });
+  throw new Error(`HTTP ${lastStatus} ${label} after ${RETRY_MAX + 1} attempts :: ${lastBody}`);
+}
+
 async function api<T>(method: string, route: string, body?: unknown, query?: Record<string, string>): Promise<T> {
   const qs = query
     ? '?' +
@@ -239,44 +289,49 @@ async function api<T>(method: string, route: string, body?: unknown, query?: Rec
         .join('&')
     : '';
   const url = `${STRAPI_URL}${route}${qs}`;
-  const res = await fetch(url, {
-    method,
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: body === undefined ? undefined : JSON.stringify(body),
+  const label = `${method} ${route}${qs}`;
+  return withRetry<T>(label, async () => {
+    const res = await fetch(url, {
+      method,
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+    const text = await res.text();
+    if (!res.ok) {
+      return { ok: false, status: res.status, bodyPreview: text.slice(0, 200) };
+    }
+    const data = (text ? JSON.parse(text) : undefined) as T;
+    return { ok: true, status: res.status, data, bodyPreview: '' };
   });
-  const text = await res.text();
-  if (!res.ok) {
-    const trim = text.slice(0, 200);
-    failures.push({ url: `${method} ${route}${qs}`, status: res.status, body: trim });
-    throw new Error(`HTTP ${res.status} ${method} ${route}${qs} :: ${trim}`);
-  }
-  return text ? (JSON.parse(text) as T) : (undefined as T);
 }
 
 async function uploadFile(absPath: string): Promise<StrapiFile> {
-  const buf = await readFile(absPath);
   const name = path.basename(absPath);
-  const mime = guessMime(name);
-  const fd = new FormData();
-  // Strapi's `files` field accepts a Blob with a filename.
-  fd.append('files', new Blob([buf], { type: mime }), name);
-  const res = await fetch(`${STRAPI_URL}/api/upload`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${TOKEN}` },
-    body: fd,
+  const label = `POST /api/upload (${name})`;
+  return withRetry<StrapiFile>(label, async () => {
+    const buf = await readFile(absPath);
+    const mime = guessMime(name);
+    const fd = new FormData();
+    fd.append('files', new Blob([buf], { type: mime }), name);
+    const res = await fetch(`${STRAPI_URL}/api/upload`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${TOKEN}` },
+      body: fd,
+    });
+    const text = await res.text();
+    if (!res.ok) {
+      return { ok: false, status: res.status, bodyPreview: text.slice(0, 200) };
+    }
+    const parsed = JSON.parse(text) as StrapiFile[];
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      return { ok: false, status: 500, bodyPreview: 'upload returned no files' };
+    }
+    return { ok: true, status: res.status, data: parsed[0], bodyPreview: '' };
   });
-  const text = await res.text();
-  if (!res.ok) {
-    failures.push({ url: `POST /api/upload (${name})`, status: res.status, body: text.slice(0, 200) });
-    throw new Error(`upload failed ${res.status} ${name}: ${text.slice(0, 200)}`);
-  }
-  const parsed = JSON.parse(text) as StrapiFile[];
-  if (!Array.isArray(parsed) || parsed.length === 0) throw new Error(`upload returned no files for ${name}`);
-  return parsed[0];
 }
 
 function guessMime(name: string): string {
