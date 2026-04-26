@@ -14,7 +14,7 @@
     "slug": { "type": "uid", "targetField": "title", "required": true },
     "section": {
       "type": "enumeration",
-      "enum": ["about", "academics", "admissions", "facilities", "policy", "info", "other"],
+      "enum": ["about", "academics", "admissions", "facilities", "life", "policy", "info", "other"],
       "default": "other"
     },
     "body": { "type": "richtext" },

@@ -8,6 +8,7 @@ export const SECTION_TO_SEGMENT: Record<PageSection, string> = {
   academics: "academics",
   admissions: "admissions",
   facilities: "facilities",
+  life: "life",
   policy: "policies",
   info: "info",
   other: "pages"
@@ -18,6 +19,7 @@ export const SECTION_LABEL: Record<PageSection, string> = {
   academics: "Academics",
   admissions: "Admissions",
   facilities: "Facilities",
+  life: "Life at Ansar",
   policy: "Policies",
   info: "Information",
   other: "Pages"

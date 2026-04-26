@@ -179,6 +179,7 @@ export type PageSection =
   | "academics"
   | "admissions"
   | "facilities"
+  | "life"
   | "policy"
   | "info"
   | "other";
