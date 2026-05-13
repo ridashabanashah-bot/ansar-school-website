@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ansar School — Cobalt Variant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-900: #0D1A2D;
+    --navy-800: #142848;
+    --navy-700: #1B3D6B;
+    --navy-500: #2D5A8F;
+    --navy-100: #DDE3ED;
+    --navy-50: #F4F6FA;
+    --gold: #0437F2;
+    --gold-light: #4570FA;
+    --gold-soft: #D4E0FF;
+    --cream: #F8F7F4;
+    --cream-soft: #FFFFFF;
+    --paper: #FFFFFF;
+    --ink: #0D1A2D;
+    --ink-soft: #4A5563;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream-soft);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--gold); color: var(--navy-900); }
+  .display { font-family: 'Fraunces', serif; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500; color: var(--navy-700);
+  }
+  .eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+
+  .h-accent {
+    color: var(--navy-700); font-style: italic;
+    background-image: linear-gradient(transparent 65%, rgba(4, 55, 242, 0.4) 65%);
+    padding: 0 4px;
+  }
+
+  /* Scroll progress bar */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+    z-index: 200; transition: width 0.05s linear;
+    box-shadow: 0 0 10px rgba(4, 55, 242, 0.5);
+  }
+
+  /* Cursor follower */
+  .cursor-follower {
+    position: fixed; pointer-events: none; z-index: 9999;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(4, 55, 242, 0.18) 0%, transparent 60%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+    mix-blend-mode: multiply;
+  }
+  .cursor-follower.hover { width: 360px; height: 360px; }
+  @media (max-width: 900px), (prefers-reduced-motion) { .cursor-follower { display: none; } }
+
+  /* Header */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.25rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: all 0.3s ease;
+    background: rgba(251, 248, 241, 0.7);
+    backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border-bottom: 1px solid transparent;
+  }
+  .nav.scrolled { border-bottom-color: rgba(15, 26, 36, 0.08); padding: 1rem 2.5rem; background: rgba(251, 248, 241, 0.85); }
+  .nav-brand { display: flex; align-items: center; gap: 12px; }
+  .nav-logo {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    display: grid; place-items: center;
+    font-family: 'Fraunces', serif; color: var(--navy-900); font-weight: 600; font-size: 20px;
+    position: relative;
+  }
+  .nav-logo::before {
+    content: ''; position: absolute; inset: -4px;
+    border: 1px solid var(--gold); border-radius: 50%;
+    opacity: 0.4; animation: ringPulse 3s ease-in-out infinite;
+  }
+  @keyframes ringPulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0; transform: scale(1.15); }
+  }
+  .nav-name { font-family: 'Fraunces', serif; font-size: 18px; letter-spacing: -0.01em; color: var(--ink); }
+  .nav-name small { display: block; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.18em; color: var(--ink-soft); text-transform: uppercase; }
+  .nav-utility { display: flex; gap: 1.5rem; align-items: center; font-size: 12px; color: var(--ink-soft); }
+  .nav-utility a { color: inherit; text-decoration: none; transition: color 0.2s; }
+  .nav-utility a:hover { color: var(--navy-700); }
+  .nav-links { display: flex; gap: 2rem; align-items: center; margin: 0 2rem; }
+  .nav-links a { color: var(--ink); text-decoration: none; font-size: 13px; font-weight: 500; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+  .nav-cta {
+    padding: 11px 22px; background: var(--navy-700); color: white;
+    border-radius: 100px; text-decoration: none; font-size: 13px; font-weight: 500;
+    transition: all 0.2s; position: relative; overflow: hidden;
+  }
+  .nav-cta::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%); transition: transform 0.6s;
+  }
+  .nav-cta:hover { background: var(--navy-900); transform: translateY(-1px); }
+  .nav-cta:hover::before { transform: translateX(100%); }
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+  @media (max-width: 1100px) { .nav-utility { display: none; } }
+  @media (max-width: 900px) { .nav-links { display: none; } .nav { padding: 1rem 1.25rem; } }
+
+  /* HERO with aurora mesh */
+  .hero {
+    padding: 7rem 2.5rem 4rem;
+    background: linear-gradient(180deg, var(--navy-50) 0%, var(--cream-soft) 70%);
+    position: relative; overflow: hidden;
+    isolation: isolate;
+  }
+  .aurora {
+    position: absolute; inset: -20%;
+    z-index: -1; pointer-events: none;
+    filter: blur(80px); opacity: 0.7;
+  }
+  .aurora::before, .aurora::after {
+    content: ''; position: absolute; border-radius: 50%;
+  }
+  .aurora::before {
+    width: 60%; height: 60%; top: 10%; right: -10%;
+    background: radial-gradient(circle, var(--gold-soft), transparent 70%);
+    animation: auroraDriftA 16s ease-in-out infinite alternate;
+  }
+  .aurora::after {
+    width: 50%; height: 50%; bottom: 0; left: -10%;
+    background: radial-gradient(circle, var(--navy-100), transparent 70%);
+    animation: auroraDriftB 20s ease-in-out infinite alternate;
+  }
+  @keyframes auroraDriftA {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-15%, 20%) scale(1.2); }
+  }
+  @keyframes auroraDriftB {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(20%, -15%) scale(1.15); }
+  }
+
+  .hero-card {
+    position: relative; max-width: 1400px; margin: 0 auto;
+    border-radius: 32px; overflow: hidden;
+    min-height: 620px;
+    background: linear-gradient(135deg, var(--navy-700) 0%, var(--navy-900) 100%);
+    box-shadow: 0 40px 80px rgba(15, 26, 36, 0.2);
+  }
+  .hero-card-img {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1600&q=85');
+    background-size: cover; background-position: center;
+    opacity: 0.55;
+    transform: scale(1.05);
+    animation: heroBgZoom 30s ease-in-out infinite alternate;
+  }
+  @keyframes heroBgZoom {
+    0% { transform: scale(1.05); }
+    100% { transform: scale(1.15); }
+  }
+  .hero-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(15, 26, 36, 0.7) 0%, rgba(15, 26, 36, 0.2) 60%, transparent 100%);
+  }
+  .hero-card-grid {
+    position: absolute; inset: 0; z-index: 1; opacity: 0.18; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(69, 112, 250, 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(69, 112, 250, 0.4) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 80%);
+  }
+  .hero-card-content {
+    position: relative; z-index: 2;
+    padding: 4rem 4rem 3.5rem;
+    height: 100%; min-height: 620px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    color: white;
+  }
+  .hero-top { display: flex; justify-content: space-between; align-items: start; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 8px 18px 8px 8px; background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border-radius: 100px; border: 1px solid rgba(255,255,255,0.18);
+    font-size: 12px; font-weight: 500;
+  }
+  .hero-badge .badge-dot {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--gold); position: relative;
+  }
+  .hero-badge .badge-dot::before {
+    content: ''; position: absolute; inset: -2px;
+    border: 1px solid var(--gold); border-radius: 50%;
+    animation: dotPulse 2s ease-in-out infinite;
+  }
+  @keyframes dotPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 0; transform: scale(1.6); }
+  }
+
+  .hero-bottom { display: flex; justify-content: space-between; align-items: end; gap: 3rem; flex-wrap: wrap; }
+  .hero-headline {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-size: clamp(40px, 5.5vw, 88px); line-height: 1; letter-spacing: -0.03em;
+    max-width: 720px;
+    font-variation-settings: 'opsz' 144;
+  }
+  .hero-cta-cluster { display: flex; flex-direction: column; align-items: end; gap: 1rem; max-width: 380px; text-align: right; }
+  .hero-tagline { font-size: 14px; line-height: 1.6; opacity: 0.85; }
+  .hero-cta-pill {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 14px 24px; background: white; color: var(--navy-900);
+    border-radius: 100px; text-decoration: none; font-size: 13px; font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative;
+  }
+  .hero-cta-pill:hover { transform: translateY(-3px); box-shadow: 0 24px 50px rgba(0,0,0,0.25); }
+  .hero-cta-pill::after {
+    content: '→'; display: inline-grid; place-items: center;
+    width: 26px; height: 26px; background: var(--navy-700); color: white;
+    border-radius: 50%; font-size: 12px; transition: transform 0.3s;
+  }
+  .hero-cta-pill:hover::after { transform: translateX(4px); }
+
+  /* Floating preview cards in hero margins */
+  .hero-floats { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .hf {
+    position: absolute; width: 140px; aspect-ratio: 3/4;
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 30px 60px rgba(15, 26, 36, 0.18);
+    background: white;
+  }
+  .hf img { width: 100%; height: 100%; object-fit: cover; }
+  .hf-1 { top: 12%; left: -3%; transform: rotate(-6deg); animation: hfDrift1 14s ease-in-out infinite alternate; }
+  .hf-2 { bottom: 10%; right: -3%; transform: rotate(5deg); animation: hfDrift2 18s ease-in-out infinite alternate; }
+  @keyframes hfDrift1 { 0% { transform: translate(0, 0) rotate(-6deg); } 100% { transform: translate(15px, -20px) rotate(-3deg); } }
+  @keyframes hfDrift2 { 0% { transform: translate(0, 0) rotate(5deg); } 100% { transform: translate(-15px, 20px) rotate(2deg); } }
+  @media (max-width: 1280px) { .hero-floats { display: none; } }
+
+  @media (max-width: 800px) {
+    .hero { padding: 6rem 1rem 3rem; }
+    .hero-card-content { padding: 2rem; }
+    .hero-bottom { align-items: start; flex-direction: column; }
+    .hero-cta-cluster { align-items: start; text-align: left; }
+  }
+
+  /* Marquee trust strip */
+  .trust-strip {
+    background: var(--navy-900); color: white;
+    padding: 1rem 0; overflow: hidden;
+    border-top: 1px solid rgba(4, 55, 242, 0.15);
+    border-bottom: 1px solid rgba(4, 55, 242, 0.15);
+  }
+  .marquee-track {
+    display: flex; gap: 3.5rem; align-items: center;
+    animation: marqueeRoll 35s linear infinite; white-space: nowrap;
+  }
+  .marquee-track span {
+    font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 3.5rem;
+    opacity: 0.85;
+  }
+  .marquee-track span::after { content: '◆'; color: var(--gold); font-size: 8px; }
+  @keyframes marqueeRoll { to { transform: translateX(-50%); } }
+
+  /* Section primitives */
+  section { position: relative; padding: 7rem 2.5rem; }
+  .container { max-width: 1280px; margin: 0 auto; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* About + principal */
+  .about-row {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 5rem; align-items: start;
+  }
+  @media (max-width: 900px) { .about-row { grid-template-columns: 1fr; gap: 3rem; } }
+  .about-headline {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-size: clamp(34px, 4.5vw, 64px); line-height: 1.05; letter-spacing: -0.02em;
+    margin: 1.5rem 0 2rem; color: var(--ink);
+  }
+  .about-body {
+    font-size: 17px; line-height: 1.8; color: var(--ink-soft);
+    max-width: 580px;
+  }
+  .about-body p + p { margin-top: 1.25rem; }
+
+  .principal-card {
+    position: relative;
+    background: var(--paper); border-radius: 24px;
+    padding: 2rem; border: 1px solid rgba(15, 26, 36, 0.08);
+    box-shadow: 0 30px 60px rgba(15, 26, 36, 0.06);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .principal-card:hover { transform: translateY(-6px); }
+  .principal-photo {
+    width: 100%; aspect-ratio: 4/5; border-radius: 16px; overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .principal-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .principal-quote { font-family: 'Fraunces', serif; font-size: 17px; line-height: 1.5; font-style: italic; color: var(--navy-700); position: relative; padding-left: 18px; }
+  .principal-quote::before { content: '"'; position: absolute; left: -2px; top: -10px; font-size: 48px; color: var(--gold); line-height: 1; font-family: 'Fraunces', serif; }
+  .principal-meta { display: flex; align-items: end; justify-content: space-between; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(15, 26, 36, 0.08); }
+  .principal-meta .name { font-family: 'Fraunces', serif; font-size: 16px; }
+  .principal-meta .role { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
+  .principal-meta .signature { font-family: 'Caveat', cursive; font-size: 28px; color: var(--navy-700); }
+
+  /* Orbit seal */
+  .seal {
+    position: absolute; right: -30px; top: -30px;
+    width: 110px; height: 110px;
+    border-radius: 50%; background: var(--gold-soft);
+    display: grid; place-items: center;
+    border: 1px dashed var(--gold);
+    transform: rotate(-12deg);
+    animation: sealRotate 40s linear infinite;
+    z-index: 2;
+  }
+  @keyframes sealRotate { to { transform: rotate(348deg); } }
+  .seal-inner {
+    width: 60%; height: 60%; border-radius: 50%;
+    background: var(--gold);
+    display: grid; place-items: center;
+    color: var(--navy-900); font-family: 'Fraunces', serif; font-weight: 500; font-size: 11px;
+    text-align: center; line-height: 1.2; padding: 4px;
+    letter-spacing: 0.1em;
+  }
+  .seal-orbit {
+    position: absolute; right: -56px; top: -56px;
+    width: 162px; height: 162px;
+    border: 1px solid var(--gold); border-radius: 50%;
+    opacity: 0.3; animation: orbitSpin 60s linear infinite reverse;
+  }
+  .seal-orbit::after {
+    content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 6px; height: 6px; background: var(--gold); border-radius: 50%;
+    box-shadow: 0 0 12px var(--gold);
+  }
+  @keyframes orbitSpin { to { transform: rotate(360deg); } }
+
+  /* Quick explore — 3D tilt cards */
+  .quick-explore {
+    background: linear-gradient(180deg, var(--cream-soft) 0%, var(--cream) 100%);
+    padding-top: 0;
+  }
+  .quick-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem;
+    margin-top: 3rem;
+    perspective: 1000px;
+  }
+  @media (max-width: 900px) { .quick-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .quick-grid { grid-template-columns: 1fr; } }
+  .quick-card {
+    position: relative; aspect-ratio: 3/4;
+    border-radius: 20px; overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    text-decoration: none;
+    transform-style: preserve-3d;
+  }
+  .quick-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
+  .quick-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15, 26, 36, 0.85) 0%, rgba(15, 26, 36, 0.2) 50%, transparent 100%);
+  }
+  .quick-card:hover img { transform: scale(1.08); }
+  .quick-card-num {
+    position: absolute; top: 1rem; left: 1.25rem; z-index: 2;
+    color: white; font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 14px; opacity: 0.7;
+  }
+  .quick-card-label {
+    position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+    color: white; z-index: 2;
+  }
+  .quick-card-label h3 { font-family: 'Fraunces', serif; font-size: clamp(20px, 2vw, 26px); font-weight: 400; line-height: 1.15; }
+  .quick-card-label .arrow {
+    margin-top: 0.75rem; display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px); border-radius: 50%;
+    transition: all 0.3s;
+  }
+  .quick-card:hover .arrow { background: var(--gold); transform: translateX(4px); }
+
+  /* Why Ansar — glassmorphism pills */
+  .why-ansar { background: var(--cream); position: relative; overflow: hidden; }
+  .why-ansar::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(4, 55, 242, 0.1), transparent 70%);
+    pointer-events: none;
+  }
+  .why-center {
+    position: relative; max-width: 1100px; margin: 4rem auto 0;
+    aspect-ratio: 16/10; min-height: 520px;
+  }
+  .why-photo {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 360px; height: 460px;
+    border-radius: 200px; overflow: hidden;
+    box-shadow: 0 40px 80px rgba(15, 26, 36, 0.18);
+  }
+  .why-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .why-photo::before {
+    content: ''; position: absolute; inset: -20px;
+    border: 1px dashed var(--gold);
+    border-radius: 200px;
+    pointer-events: none;
+    animation: dashRotate 60s linear infinite;
+  }
+  @keyframes dashRotate { to { transform: rotate(360deg); } }
+
+  .why-pill {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+    padding: 1.25rem 1.5rem; border-radius: 18px;
+    box-shadow: 0 24px 50px rgba(15, 26, 36, 0.08);
+    display: flex; align-items: start; gap: 14px;
+    max-width: 280px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    animation: pillFloat 6s ease-in-out infinite alternate;
+    transition: transform 0.4s ease;
+  }
+  .why-pill:hover { transform: translateY(-6px) scale(1.02); }
+  @keyframes pillFloat { to { transform: translateY(-12px); } }
+  .why-pill:nth-child(2) { animation-delay: -1.5s; }
+  .why-pill:nth-child(3) { animation-delay: -3s; }
+  .why-pill:nth-child(5) { animation-delay: -4.5s; }
+  .why-pill .icon {
+    flex: none; width: 36px; height: 36px; border-radius: 10px;
+    display: grid; place-items: center; font-family: 'Fraunces', serif;
+  }
+  .why-pill .pi-rooted { background: var(--gold-soft); color: var(--gold); }
+  .why-pill .pi-cbse { background: var(--navy-100); color: var(--navy-700); }
+  .why-pill .pi-care { background: #fce8d4; color: #b07d4a; }
+  .why-pill .pi-future { background: #d6e8d6; color: #5a7d5a; }
+  .why-pill h4 { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; line-height: 1.2; }
+  .why-pill p { font-size: 12px; line-height: 1.5; color: var(--ink-soft); margin-top: 4px; }
+
+  .why-pill.p1 { top: 6%; left: 4%; }
+  .why-pill.p2 { top: 8%; right: 4%; }
+  .why-pill.p3 { bottom: 8%; left: 4%; }
+  .why-pill.p4 { bottom: 6%; right: 4%; }
+
+  @media (max-width: 900px) {
+    .why-center { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; min-height: auto; aspect-ratio: auto; }
+    .why-photo { position: relative; left: auto; top: auto; transform: none; width: 100%; height: 320px; grid-column: 1 / -1; border-radius: 24px; margin-bottom: 1rem; }
+    .why-photo::before { display: none; }
+    .why-pill { position: relative; top: auto; left: auto; right: auto; bottom: auto; max-width: none; animation: none; }
+  }
+
+  /* Numbered offerings */
+  .offerings { background: var(--paper); }
+  .offerings-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 4rem; }
+  @media (max-width: 800px) { .offerings-header { grid-template-columns: 1fr; gap: 2rem; } }
+  .offerings h2 {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-size: clamp(36px, 4.5vw, 64px); line-height: 1.05; letter-spacing: -0.02em;
+    margin-top: 1.5rem;
+  }
+  .offerings-meta { font-size: 14px; line-height: 1.7; color: var(--ink-soft); }
+
+  .offer-list { border-top: 1px solid rgba(15, 26, 36, 0.1); list-style: none; }
+  .offer-item {
+    display: grid; grid-template-columns: 80px 1fr auto; gap: 2rem;
+    padding: 2rem 0; border-bottom: 1px solid rgba(15, 26, 36, 0.1);
+    transition: all 0.4s ease; cursor: pointer;
+    align-items: center; position: relative;
+  }
+  .offer-item::before {
+    content: ''; position: absolute; inset: 0; left: -2.5rem; right: -2.5rem;
+    background: var(--navy-700); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: -1;
+  }
+  .offer-item:hover::before { transform: scaleX(1); }
+  .offer-item:hover { color: white; }
+  .offer-item:hover .offer-mark { color: var(--gold); }
+  .offer-item:hover .offer-arrow { background: var(--gold); color: var(--navy-900); transform: rotate(-45deg); }
+  .offer-mark { font-family: 'Fraunces', serif; font-weight: 300; font-style: italic; font-size: 26px; color: rgba(15,26,36,0.3); transition: color 0.3s; letter-spacing: 0.05em; }
+  .offer-content h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(22px, 2.4vw, 32px); line-height: 1.2; margin-bottom: 6px; }
+  .offer-content p { font-size: 13px; opacity: 0.7; max-width: 540px; }
+  .offer-arrow {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--cream); color: var(--navy-700);
+    display: grid; place-items: center;
+    transition: all 0.4s ease;
+  }
+
+  /* Bento grid — replaces AI section */
+  .bento-section {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-soft) 100%);
+    overflow: hidden; position: relative;
+  }
+  .bento-section::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(4, 55, 242, 0.08), transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(23, 53, 80, 0.06), transparent 50%);
+    pointer-events: none;
+  }
+  .bento-header { text-align: center; max-width: 720px; margin: 0 auto 4rem; position: relative; z-index: 2; }
+  .bento-header h2 {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-size: clamp(36px, 4.5vw, 64px); line-height: 1.05; letter-spacing: -0.02em;
+    margin-top: 1rem;
+  }
+
+  .bento-grid {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 180px;
+    gap: 1rem;
+  }
+  @media (max-width: 900px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .bento-grid { grid-template-columns: 1fr; } }
+
+  .bento {
+    position: relative; border-radius: 20px; overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    background: var(--paper);
+  }
+  .bento:hover { transform: translateY(-4px); }
+  .bento img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+  .bento:hover img { transform: scale(1.06); }
+
+  .bento-img { background: var(--navy-700); }
+  .bento-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15, 26, 36, 0.7), transparent 50%);
+  }
+  .bento-img .label {
+    position: absolute; bottom: 1.25rem; left: 1.25rem; right: 1.25rem;
+    color: white; z-index: 2; font-family: 'Fraunces', serif;
+    font-size: 18px; font-weight: 400; line-height: 1.2;
+  }
+  .bento-img .label small { display: block; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; margin-bottom: 6px; font-weight: 500; }
+
+  .bento-quote {
+    background: var(--navy-900); color: white;
+    padding: 1.75rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+  }
+  .bento-quote::before {
+    content: '"'; position: absolute; top: 0.5rem; left: 1.25rem;
+    font-family: 'Fraunces', serif; font-size: 80px; line-height: 0.8;
+    color: var(--gold); opacity: 0.3;
+  }
+  .bento-quote blockquote {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+    font-size: clamp(15px, 1.5vw, 19px); line-height: 1.4;
+    margin-top: 1.5rem;
+  }
+  .bento-quote cite { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; font-style: normal; margin-top: 1rem; display: block; }
+
+  .bento-card {
+    background: var(--paper); padding: 1.75rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    border: 1px solid rgba(15, 26, 36, 0.06);
+  }
+  .bento-card .eyebrow { color: var(--navy-700); margin-bottom: 1rem; }
+  .bento-card h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(20px, 2vw, 28px); line-height: 1.2; }
+  .bento-card p { font-size: 13px; line-height: 1.6; color: var(--ink-soft); margin-top: 0.5rem; }
+
+  .bento-ornament {
+    background: linear-gradient(135deg, var(--gold-soft), var(--cream));
+    display: grid; place-items: center; position: relative; overflow: hidden;
+  }
+  .bento-ornament svg { width: 64%; height: 64%; }
+  .bento-ornament .crest-ring {
+    fill: none; stroke: var(--gold); stroke-width: 1; stroke-dasharray: 4 4;
+    animation: crestSpin 30s linear infinite;
+    transform-origin: center;
+  }
+  @keyframes crestSpin { to { transform: rotate(360deg); } }
+
+  .bento-meta {
+    background: var(--navy-700); color: white;
+    padding: 1.5rem; display: flex; flex-direction: column; gap: 8px;
+    justify-content: center;
+  }
+  .bento-meta .key { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; }
+  .bento-meta .value { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; font-size: clamp(20px, 2vw, 28px); line-height: 1.15; }
+
+  /* bento sizing */
+  .b-1 { grid-column: span 2; grid-row: span 2; }
+  .b-2 { grid-column: span 1; grid-row: span 1; }
+  .b-3 { grid-column: span 1; grid-row: span 2; }
+  .b-4 { grid-column: span 2; grid-row: span 1; }
+  .b-5 { grid-column: span 1; grid-row: span 1; }
+  .b-6 { grid-column: span 1; grid-row: span 1; }
+  .b-7 { grid-column: span 2; grid-row: span 1; }
+
+  @media (max-width: 900px) {
+    .b-1, .b-3, .b-4, .b-7 { grid-column: span 2; }
+    .b-2, .b-5, .b-6 { grid-column: span 1; }
+    .b-3 { grid-row: span 1; }
+    .b-1 { grid-row: span 2; }
+  }
+  @media (max-width: 480px) {
+    .b-1, .b-2, .b-3, .b-4, .b-5, .b-6, .b-7 { grid-column: span 1; grid-row: span 1; }
+    .b-1, .b-3 { grid-row: span 2; }
+  }
+
+  /* Latest happenings */
+  .latest-section { background: var(--cream-soft); }
+  .latest-header {
+    display: flex; justify-content: space-between; align-items: end;
+    margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;
+  }
+  .latest-header h2 {
+    font-family: 'Fraunces', serif; font-weight: 300;
+    font-size: clamp(36px, 4.5vw, 60px); line-height: 1.05; letter-spacing: -0.02em;
+    margin: 1rem 0 0;
+  }
+  .latest-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-chip {
+    padding: 8px 16px; background: var(--paper);
+    border: 1px solid rgba(15, 26, 36, 0.1); border-radius: 100px;
+    font-size: 12px; font-weight: 500; color: var(--ink);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-chip:hover { border-color: var(--gold); }
+  .filter-chip.active { background: var(--navy-700); color: white; border-color: var(--navy-700); }
+
+  .latest-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  }
+  @media (max-width: 700px) { .latest-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .latest-tile {
+    position: relative; aspect-ratio: 1/1;
+    border-radius: 16px; overflow: hidden;
+    cursor: pointer; text-decoration: none;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .latest-tile:hover { transform: translateY(-4px); }
+  .latest-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .latest-tile:hover img { transform: scale(1.06); }
+  .latest-tile-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15,26,36,0.92), rgba(15,26,36,0.2) 60%, transparent 100%);
+    opacity: 0.85; transition: opacity 0.3s;
+    display: flex; flex-direction: column; justify-content: end;
+    padding: 1.5rem; color: white;
+  }
+  .latest-tile:hover .latest-tile-overlay { opacity: 1; }
+  .latest-tag {
+    align-self: flex-start;
+    padding: 4px 10px; background: rgba(4, 55, 242, 0.85); color: var(--navy-900);
+    border-radius: 100px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .latest-title { font-family: 'Fraunces', serif; font-weight: 400; font-size: 17px; line-height: 1.25; }
+  .latest-meta { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; margin-top: 0.5rem; display: flex; align-items: center; gap: 8px; }
+  .latest-meta::before { content: ''; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
+
+  /* Big CTA card */
+  .cta-card-section { background: var(--cream); padding: 4rem 2.5rem 8rem; }
+  .cta-card {
+    max-width: 1280px; margin: 0 auto;
+    background: linear-gradient(135deg, var(--navy-700) 0%, var(--navy-900) 100%);
+    border-radius: 32px; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1.3fr 1fr;
+    align-items: stretch;
+    color: white;
+    position: relative;
+  }
+  .cta-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(4, 55, 242, 0.12), transparent 50%);
+    pointer-events: none;
+  }
+  @media (max-width: 900px) { .cta-card { grid-template-columns: 1fr; } }
+  .cta-img { aspect-ratio: 4/5; overflow: hidden; }
+  .cta-img img { width: 100%; height: 100%; object-fit: cover; }
+  .cta-content { padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 1.25rem; position: relative; }
+  .cta-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18); border-radius: 100px;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500;
+  }
+  .cta-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
+    box-shadow: 0 0 0 3px rgba(4, 55, 242, 0.3); animation: dotPulse 2s ease-in-out infinite;
+  }
+  .cta-content h2 { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(32px, 3.5vw, 48px); line-height: 1.1; letter-spacing: -0.02em; }
+  .cta-content h2 .h-accent { color: var(--gold); background: none; font-style: italic; }
+  .cta-content p { opacity: 0.7; font-size: 14px; max-width: 320px; line-height: 1.6; }
+  .cta-btn {
+    margin-top: 0.5rem;
+    padding: 14px 28px; background: var(--gold); color: var(--navy-900);
+    border-radius: 100px; text-decoration: none; font-size: 13px; font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); display: inline-flex; align-items: center; gap: 10px;
+    position: relative; overflow: hidden;
+  }
+  .cta-btn::after { content: '→'; transition: transform 0.3s; }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(4, 55, 242, 0.4); }
+  .cta-btn:hover::after { transform: translateX(4px); }
+
+  /* Footer */
+  footer {
+    background: var(--navy-900); color: white;
+    padding: 5rem 2.5rem 2rem;
+  }
+  .footer-grid {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+    padding-bottom: 3rem;
+  }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 500px) { .footer-grid { grid-template-columns: 1fr; } }
+  .footer-brand p { margin-top: 1.5rem; font-size: 13px; line-height: 1.7; opacity: 0.6; max-width: 320px; }
+  footer h4 { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; font-weight: 500; }
+  footer ul { list-style: none; }
+  footer li { margin-bottom: 0.75rem; }
+  footer a { color: white; text-decoration: none; font-size: 13px; opacity: 0.7; transition: opacity 0.3s; }
+  footer a:hover { opacity: 1; }
+
+  .footer-socials {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; gap: 12px;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer-social {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: grid; place-items: center;
+    color: white; opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+  .footer-social:hover { background: var(--gold); border-color: var(--gold); color: var(--navy-900); opacity: 1; transform: translateY(-2px); }
+  .footer-social svg { width: 16px; height: 16px; }
+
+  .footer-bottom {
+    max-width: 1280px; margin: 0 auto; padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<nav class="nav" id="nav">
+  <div class="nav-brand">
+    <div class="nav-logo">A</div>
+    <div class="nav-name">Ansar School<small>Padhinjarangadi · Kerala</small></div>
+  </div>
+  <div class="nav-links">
+    <a href="#about" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#academics">Academics</a>
+    <a href="#admissions">Admissions</a>
+    <a href="#latest">News</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-utility"><a href="#">FAQs</a><a href="#">Brochure</a></div>
+    <a href="#admissions" class="nav-cta">Apply for next year</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="aurora"></div>
+
+  <div class="hero-floats">
+    <div class="hf hf-1"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=85" alt="" /></div>
+    <div class="hf hf-2"><img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&q=85" alt="" /></div>
+  </div>
+
+  <div class="hero-card">
+    <div class="hero-card-img"></div>
+    <div class="hero-card-grid"></div>
+    <div class="hero-card-overlay"></div>
+    <div class="hero-card-content">
+      <div class="hero-bottom">
+        <h1 class="hero-headline">
+          A school for the <em style="font-style: italic; color: var(--gold-light);">next generation</em> of Padhinjarangadi.
+        </h1>
+        <div class="hero-cta-cluster">
+          <p class="hero-tagline">Values-led learning, classroom-tested teaching, and a campus designed for the children who will shape what's next.</p>
+          <a href="#admissions" class="hero-cta-pill">View admissions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee trust strip -->
+<div class="trust-strip">
+  <div class="marquee-track">
+    <span>CBSE Affiliated</span><span>English Medium</span><span>Class I — X</span>
+    <span>Padhinjarangadi · Kerala</span><span>Values-led teaching</span><span>Established for decades</span>
+    <span>CBSE Affiliated</span><span>English Medium</span><span>Class I — X</span>
+    <span>Padhinjarangadi · Kerala</span><span>Values-led teaching</span><span>Established for decades</span>
+  </div>
+</div>
+
+<!-- About + principal -->
+<section id="about">
+  <div class="container">
+    <div class="about-row">
+      <div class="reveal">
+        <span class="eyebrow">About Ansar</span>
+        <h2 class="about-headline">Built for the families of Padhinjarangadi, ready for <span class="h-accent">what comes next.</span></h2>
+        <div class="about-body">
+          <p>Ansar School is a private, English-medium, CBSE-affiliated school for Classes I through X. We were founded by educators who believed a good school should grow with its community — not look down on it.</p>
+          <p>Our work is to prepare children — academically, ethically, and personally — for a world that's wider than where they were born, without asking them to leave home behind. We pair classical teaching with modern tools, so learning feels like part of the world children will actually live in.</p>
+        </div>
+      </div>
+
+      <aside class="principal-card reveal">
+        <div class="seal-orbit"></div>
+        <div class="seal"><div class="seal-inner">ANSAR<br/>SCHOOL</div></div>
+        <div class="principal-photo">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=85" alt="Principal" />
+        </div>
+        <p class="principal-quote">A school is not its building, or its uniforms, or its results. It's what its children carry with them when they walk out the gate for the last time.</p>
+        <div class="principal-meta">
+          <div>
+            <div class="name">The Principal</div>
+            <div class="role">Ansar School · Padhinjarangadi</div>
+          </div>
+          <span class="signature">— Ansar</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- Quick explore -->
+<section class="quick-explore">
+  <div class="container">
+    <div class="latest-header" style="margin-bottom: 0;">
+      <div class="reveal">
+        <span class="eyebrow">Explore</span>
+        <h2 class="about-headline" style="margin: 1rem 0 0;">Find what you came for.</h2>
+      </div>
+    </div>
+    <div class="quick-grid">
+      <a href="#" class="quick-card reveal">
+        <span class="quick-card-num">i.</span>
+        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&q=85" alt="" />
+        <div class="quick-card-label"><h3>School profile</h3><span class="arrow">→</span></div>
+      </a>
+      <a href="#" class="quick-card reveal">
+        <span class="quick-card-num">ii.</span>
+        <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=600&q=85" alt="" />
+        <div class="quick-card-label"><h3>Faculty &amp; staff</h3><span class="arrow">→</span></div>
+      </a>
+      <a href="#" class="quick-card reveal">
+        <span class="quick-card-num">iii.</span>
+        <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=85" alt="" />
+        <div class="quick-card-label"><h3>Facilities</h3><span class="arrow">→</span></div>
+      </a>
+      <a href="#" class="quick-card reveal">
+        <span class="quick-card-num">iv.</span>
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=85" alt="" />
+        <div class="quick-card-label"><h3>Co-curriculars</h3><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Why Ansar -->
+<section class="why-ansar">
+  <div class="container">
+    <div style="text-align: center; max-width: 720px; margin: 0 auto; position: relative; z-index: 2;">
+      <span class="eyebrow reveal">Why Ansar</span>
+      <h2 class="about-headline reveal" style="margin-top: 1rem;">A balanced approach to <span class="h-accent">a child's first decade</span> of school.</h2>
+    </div>
+
+    <div class="why-center">
+      <div class="why-pill p1 reveal">
+        <div class="icon pi-rooted">✦</div>
+        <div>
+          <h4>Rooted in values</h4>
+          <p>Character first, content second. We teach as much through how we behave as through what we say.</p>
+        </div>
+      </div>
+      <div class="why-pill p2 reveal">
+        <div class="icon pi-cbse">★</div>
+        <div>
+          <h4>CBSE excellence</h4>
+          <p>The full CBSE curriculum, taught with care and academic rigour by experienced subject specialists.</p>
+        </div>
+      </div>
+      <div class="why-photo reveal">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=85" alt="Student at desk" />
+      </div>
+      <div class="why-pill p3 reveal">
+        <div class="icon pi-care">♡</div>
+        <div>
+          <h4>Small enough to know you</h4>
+          <p>We know our families by name. Concerns get heard. Wins get noticed. Children don't disappear into a number.</p>
+        </div>
+      </div>
+      <div class="why-pill p4 reveal">
+        <div class="icon pi-future">→</div>
+        <div>
+          <h4>Future-ready classrooms</h4>
+          <p>Smart boards, hands-on labs, a stocked library. Children learn the way they'll work — with the tools they'll meet later.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Numbered offerings -->
+<section class="offerings" id="academics">
+  <div class="container">
+    <div class="offerings-header">
+      <div class="reveal">
+        <span class="eyebrow">What we offer</span>
+        <h2>Things <span class="h-accent">we take seriously</span> at Ansar.</h2>
+      </div>
+      <p class="offerings-meta reveal">Beyond the timetable, these are the threads that run through how we run a school. Hover any item to read more.</p>
+    </div>
+
+    <ol class="offer-list">
+      <li class="offer-item reveal">
+        <div class="offer-mark">i.</div>
+        <div class="offer-content">
+          <h3>Academic excellence</h3>
+          <p>Full CBSE curriculum, Class I through X. Subject specialists, regular assessments, and a calm, structured day.</p>
+        </div>
+        <div class="offer-arrow">→</div>
+      </li>
+      <li class="offer-item reveal">
+        <div class="offer-mark">ii.</div>
+        <div class="offer-content">
+          <h3>Values &amp; character</h3>
+          <p>Daily assemblies, ethics discussions, and a community life that takes manners and integrity as seriously as marks.</p>
+        </div>
+        <div class="offer-arrow">→</div>
+      </li>
+      <li class="offer-item reveal">
+        <div class="offer-mark">iii.</div>
+        <div class="offer-content">
+          <h3>Modern learning environments</h3>
+          <p>Smart classrooms, a stocked library, and hands-on labs. Tools that match how children actually learn today.</p>
+        </div>
+        <div class="offer-arrow">→</div>
+      </li>
+      <li class="offer-item reveal">
+        <div class="offer-mark">iv.</div>
+        <div class="offer-content">
+          <h3>Co-curriculars &amp; arts</h3>
+          <p>Music, drawing, drama, and clubs that meet weekly. Every child finds something that's theirs outside the classroom.</p>
+        </div>
+        <div class="offer-arrow">→</div>
+      </li>
+      <li class="offer-item reveal">
+        <div class="offer-mark">v.</div>
+        <div class="offer-content">
+          <h3>Sports &amp; physical life</h3>
+          <p>Field, court, and PE periods that actually happen. Inter-house tournaments, district-level athletics, daily play.</p>
+        </div>
+        <div class="offer-arrow">→</div>
+      </li>
+      <li class="offer-item reveal">
+        <div class="offer-mark">vi.</div>
+        <div class="offer-content">
+          <h3>Community &amp; family</h3>
+          <p>Open-door office hours, parent-teacher conversations, and a campus that's part of the neighbourhood it sits in.</p>
+        </div>
+        <div class="offer-arrow">→</div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- Bento grid: A day at Ansar -->
+<section class="bento-section">
+  <div class="container">
+    <div class="bento-header reveal">
+      <span class="eyebrow">A day at Ansar</span>
+      <h2>Small <span class="h-accent">moments,</span> stitched together.</h2>
+    </div>
+
+    <div class="bento-grid">
+      <div class="bento bento-img b-1 reveal">
+        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=900&q=85" alt="" />
+        <div class="label"><small>06:30 AM</small>Mornings begin in the courtyard.</div>
+      </div>
+
+      <div class="bento bento-quote b-2 reveal">
+        <blockquote>The bell hasn't rung. Already, the corridors know what to do.</blockquote>
+        <cite>The school, every morning</cite>
+      </div>
+
+      <div class="bento bento-img b-3 reveal">
+        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&q=85" alt="" />
+        <div class="label"><small>Library wing</small>The quiet half.</div>
+      </div>
+
+      <div class="bento bento-card b-4 reveal">
+        <span class="eyebrow">A campus designed for learning</span>
+        <h3>Smart classrooms, hands-on labs, and a library that stays open through lunch.</h3>
+        <p>Learning environments built to match how children actually learn today — not how textbooks said they should.</p>
+      </div>
+
+      <div class="bento bento-ornament b-5 reveal">
+        <svg viewBox="0 0 100 100">
+          <circle class="crest-ring" cx="50" cy="50" r="44" />
+          <circle cx="50" cy="50" r="32" fill="var(--gold)" />
+          <text x="50" y="45" text-anchor="middle" fill="#0f1a24" font-family="Fraunces" font-size="10" font-weight="500" font-style="italic">Ansar</text>
+          <text x="50" y="58" text-anchor="middle" fill="#0f1a24" font-family="Fraunces" font-size="6" letter-spacing="1.5">SCHOOL</text>
+        </svg>
+      </div>
+
+      <div class="bento bento-meta b-6 reveal">
+        <span class="key">Coordinates</span>
+        <span class="value">Padhinjarangadi, Kerala — South-west monsoon air, year-round.</span>
+      </div>
+
+      <div class="bento bento-img b-7 reveal">
+        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=900&q=85" alt="" />
+        <div class="label"><small>Afternoons</small>The field. The court. The corridor that smells like rain.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Latest happenings -->
+<section class="latest-section" id="latest">
+  <div class="container">
+    <div class="latest-header">
+      <div class="reveal">
+        <span class="eyebrow">Recent</span>
+        <h2>Latest <span class="h-accent">happenings.</span></h2>
+      </div>
+      <div class="latest-filters reveal">
+        <span class="filter-chip active">All</span>
+        <span class="filter-chip">Events</span>
+        <span class="filter-chip">Academic</span>
+        <span class="filter-chip">Sports</span>
+      </div>
+    </div>
+
+    <div class="latest-grid">
+      <a href="#" class="latest-tile reveal">
+        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&q=85" alt="" />
+        <div class="latest-tile-overlay">
+          <span class="latest-tag">Annual day</span>
+          <div class="latest-title">An evening shaped by the children themselves.</div>
+          <div class="latest-meta">Yesterday</div>
+        </div>
+      </a>
+      <a href="#" class="latest-tile reveal">
+        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=85" alt="" />
+        <div class="latest-tile-overlay">
+          <span class="latest-tag">Reading week</span>
+          <div class="latest-title">A shelf full of stories, by Class V.</div>
+          <div class="latest-meta">Three days ago</div>
+        </div>
+      </a>
+      <a href="#" class="latest-tile reveal">
+        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&q=85" alt="" />
+        <div class="latest-tile-overlay">
+          <span class="latest-tag">Sports</span>
+          <div class="latest-title">House blue takes the relay on a still afternoon.</div>
+          <div class="latest-meta">Last week</div>
+        </div>
+      </a>
+      <a href="#" class="latest-tile reveal">
+        <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800&q=85" alt="" />
+        <div class="latest-tile-overlay">
+          <span class="latest-tag">Science fair</span>
+          <div class="latest-title">Cardboard and ambition, Class VIII.</div>
+          <div class="latest-meta">Last week</div>
+        </div>
+      </a>
+      <a href="#" class="latest-tile reveal">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=85" alt="" />
+        <div class="latest-tile-overlay">
+          <span class="latest-tag">Campus</span>
+          <div class="latest-title">A morning at school, from bell to bell.</div>
+          <div class="latest-meta">Two weeks ago</div>
+        </div>
+      </a>
+      <a href="#" class="latest-tile reveal">
+        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=800&q=85" alt="" />
+        <div class="latest-tile-overlay">
+          <span class="latest-tag">Library</span>
+          <div class="latest-title">Where the second half of school happens.</div>
+          <div class="latest-meta">Two weeks ago</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA card -->
+<section class="cta-card-section" id="admissions">
+  <div class="cta-card reveal">
+    <div class="cta-img"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=85" alt="" /></div>
+    <div class="cta-content">
+      <span class="cta-tag">Admissions open</span>
+      <h2>Ready to give your child <span class="h-accent">the best start?</span></h2>
+      <p>Schedule a campus visit, request the brochure, or write to the admissions office.</p>
+      <a href="#" class="cta-btn">Schedule a campus visit</a>
+    </div>
+    <div class="cta-img right"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=85" alt="" /></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-brand">
+        <div class="nav-logo">A</div>
+        <div class="nav-name" style="color: white;">Ansar School<small style="color: rgba(255,255,255,0.5);">Padhinjarangadi · Kerala</small></div>
+      </div>
+      <p>A private, English-medium CBSE school for the families of Padhinjarangadi. Values-led education, Class I through X.</p>
+    </div>
+    <div><h4>Explore</h4><ul><li><a href="#">About</a></li><li><a href="#">Academics</a></li><li><a href="#">Admissions</a></li><li><a href="#">Life at Ansar</a></li></ul></div>
+    <div><h4>Resources</h4><ul><li><a href="#">News</a></li><li><a href="#">Gallery</a></li><li><a href="#">Documents</a></li><li><a href="#">FAQs</a></li></ul></div>
+    <div><h4>Visit</h4><ul><li><a href="#">Padhinjarangadi, Kerala</a></li><li><a href="#">Phone the school</a></li><li><a href="#">hello@ansarschool.in</a></li></ul></div>
+  </div>
+
+  <div class="footer-socials">
+    <a href="#" class="footer-social" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.18 8.8 2.16 12 2.16zm0 4.5a5.34 5.34 0 100 10.68 5.34 5.34 0 000-10.68zm6.84-.18a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0zM12 8.83a3.17 3.17 0 110 6.34 3.17 3.17 0 010-6.34z"/></svg>
+    </a>
+    <a href="#" class="footer-social" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <a href="#" class="footer-social" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </a>
+    <a href="#" class="footer-social" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© Ansar School. All rights reserved.</span>
+    <span>Built with care for Padhinjarangadi.</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll progress
+  const progress = document.getElementById('scrollProgress');
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const pct = (scrollTop / docHeight) * 100;
+    progress.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+
+  // Cursor follower
+  const cursor = document.getElementById('cursorFollower');
+  let cx = 0, cy = 0, tx = 0, ty = 0;
+  document.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; });
+  function animateCursor() {
+    cx += (tx - cx) * 0.1;
+    cy += (ty - cy) * 0.1;
+    cursor.style.left = cx + 'px';
+    cursor.style.top = cy + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button, .quick-card, .latest-tile, .why-pill, .bento, .offer-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 30) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('in'), i * 60);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => revealObserver.observe(r));
+
+  // 3D tilt on quick cards
+  document.querySelectorAll('.quick-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const rotX = ((y - cy) / cy) * -6;
+      const rotY = ((x - cx) / cx) * 6;
+      card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+</script>
+
+</body>
+</html>

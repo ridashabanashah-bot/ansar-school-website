@@ -704,6 +704,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'academics',
         'admissions',
         'facilities',
+        'life',
         'policy',
         'info',
         'other',
@@ -733,12 +734,15 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
   };
   attributes: {
     address: Schema.Attribute.Text;
+    addressLine1: Schema.Attribute.String;
+    addressLine2: Schema.Attribute.String;
     contactEmail: Schema.Attribute.Email;
     contactPhone: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     facebookUrl: Schema.Attribute.String;
+    footerAboutBlurb: Schema.Attribute.Text;
     footerNavigation: Schema.Attribute.JSON;
     instagramUrl: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -750,6 +754,7 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
     logo: Schema.Attribute.Media<'images'>;
     mapEmbedUrl: Schema.Attribute.String;
     navigation: Schema.Attribute.JSON;
+    officeHours: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     schoolName: Schema.Attribute.String &
       Schema.Attribute.Required &

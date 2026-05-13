@@ -5,38 +5,35 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Logo-derived deep navy ink ramp (single-tone Ansar logo).
         brand: {
-          50: "#f4f6f9",
-          100: "#e6ecf2",
-          200: "#c7d3e0",
-          300: "#95acc4",
-          400: "#5d7a99",
-          500: "#335778",
-          600: "#234260",
-          700: "#173550",
-          800: "#102a40",
-          900: "#0c2033",
-          950: "#061523"
+          50: "#F4F6FA",
+          100: "#DDE3ED",
+          200: "#BCC8DA",
+          300: "#8FA3BD",
+          400: "#5C7AA0",
+          500: "#335A85",
+          600: "#244A75",
+          700: "#1B3D6B",
+          800: "#14305B",
+          900: "#0D1F40",
+          950: "#060F1F"
         },
-        // Warm gold accent — single-color logo, so accent stays neutral-warm.
         accent: {
-          50: "#fdf8eb",
-          100: "#faecc4",
-          200: "#f3d685",
-          300: "#ecbd4b",
-          400: "#d8a23a",
-          500: "#b8801c",
-          600: "#976514",
-          700: "#75500f",
-          800: "#5a3d0c",
-          900: "#3f2a08"
+          50: "#EBF0FF",
+          100: "#D4E0FF",
+          200: "#B3C5FC",
+          300: "#82A1FA",
+          400: "#4570FA",
+          500: "#0437F2",
+          600: "#0E37CA",
+          700: "#224C98",
+          800: "#1A3870",
+          900: "#102045"
         },
-        // Cream / off-white surfaces — alabaster-style warm neutrals.
         cream: {
-          50: "#fdf9f1",
-          100: "#f7efe1",
-          200: "#ecdfc6"
+          50: "#FFFFFF",
+          100: "#F8F9FB",
+          200: "#EAEEF5"
         }
       },
       fontFamily: {
@@ -44,10 +41,10 @@ const config: Config = {
         display: ["var(--font-fraunces)", "Fraunces", "Georgia", "serif"]
       },
       maxWidth: {
-        content: "72rem"
+        content: "80rem"
       },
       boxShadow: {
-        prominent: "0 10px 30px -10px rgba(15, 32, 51, 0.20), 0 4px 12px -4px rgba(15, 32, 51, 0.10)"
+        prominent: "0 30px 60px -20px rgba(13, 31, 64, 0.18), 0 8px 20px -8px rgba(13, 31, 64, 0.10)"
       }
     }
   },
